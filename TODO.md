@@ -55,7 +55,7 @@
 
 ### 💻 User Interface
 
-- [ ] Create `Application` class with:
+- [x] Create `Application` class with:
     - [ ] `mainMenu()`
     - [ ] `orderMenu()`
 - [ ] Implement CLI-based interaction:
