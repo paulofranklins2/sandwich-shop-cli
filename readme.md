@@ -17,6 +17,17 @@ This project was created as part of **Advanced Java OOP Capstone 2**.
 - 📄 Generate and store receipts as timestamped `.txt` files
 - 🧩 Modular architecture using enums, interfaces, and services
 
+## 📋 Project Progress & Roadmap
+
+Development progress for this project is actively tracked in the [`TODO.md`](TODO.md) file.  
+It includes a complete checklist of:
+
+- ✅ Tasks already completed
+- 🚧 Features still to be implemented
+- 🧪 Testing, bonus features, and polish steps
+
+Feel free to browse it to understand the direction and current status of the project!
+
 ## 📺 User Interface Flow
 
 ### Home Menu
