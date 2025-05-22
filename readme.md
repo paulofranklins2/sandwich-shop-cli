@@ -81,7 +81,7 @@ sandwich-shop-cli/
 │       ├── java/
 │       │   └── com/delicious/
 │       │       ├── app/
-│       │       ├── contract/
+│       │       ├── persistence/
 │       │       ├── interfaces/
 │       │       ├── model/
 │       │       │   └── enums/
