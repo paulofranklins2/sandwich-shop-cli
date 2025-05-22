@@ -28,7 +28,7 @@
 - [ ] Implement `Sandwich` class
     - [ ] Store size, bread, toppings, extras, toasted flag
     - [ ] Implement `getPrice()` logic using `BigDecimal`
-- [ ] Implement `Drink` class
+- [x] Implement `Drink` class
     - [ ] Store drink size and flavor
     - [ ] Implement `getPrice()` logic
 - [ ] Implement `Chips` class
