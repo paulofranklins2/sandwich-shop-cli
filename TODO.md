@@ -31,7 +31,7 @@
 - [ ] Implement `Drink` class
     - [ ] Store drink size and flavor
     - [ ] Implement `getPrice()` logic
-- [ ] Implement `Chips` class
+- [x] Implement `Chips` class
     - [ ] Store chip type
     - [ ] Implement `getPrice()` logic
 - [ ] Implement `Order` class
