@@ -41,7 +41,7 @@
 - [ ] Implement `MenuItem` interface
     - [ ] Ensure `Sandwich`, `Drink`, and `Chips` all implement it
 
-- [ ] Implement `Printable` interface (optional for UI summaries)
+- [x] Implement `Printable` interface (optional for UI summaries)
 
 ---
 
