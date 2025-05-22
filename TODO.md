@@ -28,11 +28,11 @@
 - [ ] Implement `Sandwich` class
     - [ ] Store size, bread, toppings, extras, toasted flag
     - [ ] Implement `getPrice()` logic using `BigDecimal`
-- [ ] Implement `Drink` class
+- [x] Implement `Drink` class
     - [ ] Store drink size and flavor
     - [ ] Implement `getPrice()` logic
 - [x] Implement `Chips` class
-    - [ ] Store chip type
+    - [ ] Store a chip type
     - [ ] Implement `getPrice()` logic
 - [ ] Implement `Order` class
     - [ ] List of `MenuItem` items (sandwiches, drinks, chips)
@@ -55,7 +55,7 @@
 
 ### 💻 User Interface
 
-- [x] Create `Application` class with:
+- [ ] Create `Application` class with:
     - [ ] `mainMenu()`
     - [ ] `orderMenu()`
 - [ ] Implement CLI-based interaction:
