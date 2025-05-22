@@ -38,7 +38,7 @@
     - [ ] List of `MenuItem` items (sandwiches, drinks, chips)
     - [ ] `addItem()`, `getTotalPrice()`, `generateReceipt()` methods
 
-- [ ] Implement `MenuItem` interface
+- [x] Implement `MenuItem` interface
     - [ ] Ensure `Sandwich`, `Drink`, and `Chips` all implement it
 
 - [x] Implement `Printable` interface (optional for UI summaries)
