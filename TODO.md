@@ -25,7 +25,7 @@
 
 ### 🧠 Core Models & Interfaces
 
-- [ ] Implement `Sandwich` class
+- [x] Implement `Sandwich` class
     - [ ] Store size, bread, toppings, extras, toasted flag
     - [ ] Implement `getPrice()` logic using `BigDecimal`
 - [x] Implement `Drink` class
