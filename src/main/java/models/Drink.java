@@ -17,6 +17,10 @@ public class Drink implements MenuItem {
 
     @Override
     public BigDecimal getPrice() {
-        return null;
+        return switch (drinkSize) {
+            case SMALL -> BigDecimal.valueOf(2.00);
+            case MEDIUM -> BigDecimal.valueOf(2.50);
+            case LARGE -> BigDecimal.valueOf(3.00);
+        };
     }
 }
