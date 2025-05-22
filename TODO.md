@@ -34,7 +34,7 @@
 - [ ] Implement `Chips` class
     - [ ] Store chip type
     - [ ] Implement `getPrice()` logic
-- [ ] Implement `Order` class
+- [x] Implement `Order` class
     - [ ] List of `MenuItem` items (sandwiches, drinks, chips)
     - [ ] `addItem()`, `getTotalPrice()`, `generateReceipt()` methods
 
