@@ -47,7 +47,7 @@
 
 ### 🧾 Receipt and Persistence
 
-- [ ] Create `ReceiptManager` class
+- [x] Create `ReceiptManager` class
     - [ ] Save orders to `/receipts/yyyyMMdd-hhmmss.txt`
     - [ ] Auto-create folder if not present
 
