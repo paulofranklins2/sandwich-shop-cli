@@ -31,6 +31,25 @@ public class UserInputUtils {
     }
 
     /**
+     * Prompts the user with a custom message and reads a trimmed line of text input.
+     * Retries on input failure to ensure a valid string is returned.
+     *
+     * @param prompt the message to display to the user
+     * @return the trimmed string entered by the user
+     */
+    public static String stringPrompt(String prompt) {
+        while (true) {
+            try {
+                System.out.print(prompt);
+                return scanner.nextLine().trim();
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please try again.");
+            }
+        }
+    }
+
+
+    /**
      * Displays a list of options and prompts the user to select one.
      * Accepts any array of objects and returns the selected value.
      *
