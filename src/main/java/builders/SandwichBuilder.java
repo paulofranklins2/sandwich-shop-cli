@@ -13,8 +13,19 @@ import static utils.ConsolePrinter.printHeader;
 import static utils.UserInputUtils.intPrompt;
 import static utils.UserInputUtils.promptOption;
 
+/**
+ * Builder class for creating custom {@link Sandwich} objects.
+ * Prompts the user to choose a {@link BreadType}, {@link SandwichSize},
+ * and interactively select {@link Topping}s and extras.
+ */
 public class SandwichBuilder {
 
+    /**
+     * Builds and returns a fully customized {@link Sandwich} based on user input.
+     * This includes bread type, size, toppings, extra toppings, and toasted option.
+     *
+     * @return a Sandwich instance composed through CLI prompts
+     */
     public Sandwich build() {
         printHeader("Custom Sandwich");
 
