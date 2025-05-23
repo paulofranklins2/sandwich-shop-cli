@@ -23,4 +23,9 @@ public class Drink implements MenuItem {
             case LARGE -> BigDecimal.valueOf(3.00);
         };
     }
+
+    @Override
+    public String toString() {
+        return "Drink Size: " + drinkSize.toString() + "\nDrink Flavor: " + drinkFlavor.name().replace("_", " ");
+    }
 }
