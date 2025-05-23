@@ -68,8 +68,8 @@
 
 ## 🚧 Bonus Features (Optional)
 
-- [ ] Add support for Signature Sandwiches (BLT, Philly, etc.)
-  - [ ] Inherit from `Sandwich` class
+- [x] Add support for Signature Sandwiches (BLT, Philly, etc.)
+  - [x] Inherit from `Sandwich` class
   - [ ] Allow modification (remove/add toppings)
 
 ---
