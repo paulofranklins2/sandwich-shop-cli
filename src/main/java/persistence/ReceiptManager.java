@@ -1,32 +1,45 @@
 package persistence;
 
-import java.io.FileNotFoundException;
+import interfaces.MenuItem;
+import interfaces.Printable;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class ReceiptManager {
-    private final String PATH = "src/main/resources/receipt/";
 
-    public void saveOrderReceipt() throws IOException {
-        // Get the current local date and time
+    public void saveOrderReceipt(List<MenuItem> orderItems, double total) throws IOException {
         LocalDateTime localDateTime = LocalDateTime.now();
-
-        // Define the date-time format as "yyyyMMdd-HHmmss" (e.g., 20250522-153012)
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
+        String fileName = formattedDateTime(localDateTime, formatter);
 
-        // Format the current date and time into a string
-        String formattedDateTime = localDateTime.format(formatter);
+        String PATH = "src/main/resources/receipt/";
+        try (PrintWriter printWriter = new PrintWriter(new FileWriter(PATH + fileName))) {
+            printWriter.println("=== Order Receipt ===");
+            printWriter.println("Date: " + localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            printWriter.println();
 
-        // Attempt to write to a file named with the formatted timestamp
-        // If the file doesn't exist, it will be created
-        try (PrintWriter printWriter = new PrintWriter(new FileWriter(PATH + formattedDateTime))) {
-            // TODO: Replace placeholder with actual receipt content once receipt generation is implemented
-            printWriter.println("ASDFASDF");
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + e.getMessage());
+            for (MenuItem item : orderItems) {
+                if (item instanceof Printable printable) {
+                    // Capture printed summary
+                    SummaryCapture summary = new SummaryCapture();
+                    printable.printSummary(summary);
+                    printWriter.print(summary.toString());
+                } else {
+                    printWriter.println("Unprintable item: " + item.getClass().getSimpleName());
+                }
+            }
+
+            printWriter.println();
+            printWriter.printf("TOTAL: $%.2f%n", total);
         }
+    }
+
+    private String formattedDateTime(LocalDateTime dateTime, DateTimeFormatter formatter) {
+        return dateTime.format(formatter);
     }
 }
