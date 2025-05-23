@@ -13,14 +13,24 @@ import static utils.ConsolePrinter.printHeader;
 import static utils.ConsolePrinter.printLine;
 import static utils.UserInputUtils.intPrompt;
 
+/**
+ * Manages the console-based user interface for the DELI-cious POS system.
+ * Handles user interaction for placing orders, reviewing summaries, and saving receipts.
+ */
 public class UserInterface {
 
     private final Order currentOrder = new Order();
 
+    /**
+     * Starts the user interface by showing the home screen.
+     */
     public void init() {
         homeScreen();
     }
 
+    /**
+     * Displays the home screen menu and navigates to the order screen or exits.
+     */
     private void homeScreen() {
         while (true) {
             printHeader("Home Screen");
@@ -39,6 +49,9 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Displays the order screen where the user can build and manage an order.
+     */
     private void orderScreen() {
         currentOrder.clear();
         while (true) {
@@ -72,6 +85,9 @@ public class UserInterface {
         }
     }
 
+    /**
+     * Finalizes the order by displaying a summary and confirming whether to save it as a receipt.
+     */
     private void checkoutScreen() {
         printHeader("Checkout");
 
