@@ -2,15 +2,16 @@ package models;
 
 import interfaces.MenuItem;
 import interfaces.Printable;
-import models.enums.*;
+import lombok.Getter;
 
+import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Order implements Printable, MenuItem {
-    List<MenuItem> items;
+    @Getter
+    private final List<MenuItem> items;
 
     public Order() {
         items = new ArrayList<>();
@@ -20,21 +21,34 @@ public class Order implements Printable, MenuItem {
         items.add(item);
     }
 
-    @Override
-    public BigDecimal getPrice() {
-        BigDecimal finalPrice = BigDecimal.ZERO;
-        for (MenuItem item : items) {
-            finalPrice = finalPrice.add(item.getPrice());
-        }
-        return finalPrice;
+    public void clear() {
+        items.clear();
+    }
+
+    public boolean isEmpty() {
+        return items.isEmpty();
     }
 
     @Override
-    public void printSummary() {
-        System.out.println("Order Summary");
-        for (MenuItem item : items) {
-            System.out.println(item);
+    public BigDecimal getPrice() {
+        return items.stream()
+                .map(MenuItem::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    @Override
+    public void printSummary(PrintStream out) {
+        out.println("=== Order Summary ===");
+        if (items.isEmpty()) {
+            out.println("No items in this order.");
+        } else {
+            for (MenuItem item : items) {
+                if (item instanceof Printable printable) {
+                    printable.printSummary(out);
+                } else {
+                    out.println("Unprintable item: " + item.getClass().getSimpleName());
+                }
+            }
         }
-        System.out.println("Total: " + getPrice());
     }
 }
