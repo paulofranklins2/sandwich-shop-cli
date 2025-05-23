@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static utils.ConsolePrinter.printHeader;
 import static utils.ConsolePrinter.printLine;
-import static utils.UserInputUtils.intPrompt;
+import static utils.UserInputUtils.*;
 
 /**
  * Manages the console-based user interface for the DELI-cious POS system.
@@ -25,27 +25,47 @@ public class UserInterface {
      * Starts the user interface by showing the home screen.
      */
     public void init() {
-        homeScreen();
+        mainMenu();
     }
 
     /**
-     * Displays the home screen menu and navigates to the order screen or exits.
+     * Displays the main menu and handles user navigation:
+     * - Starts a new order
+     * - Allows receipt retrieval by ID
+     * - Exits the application
      */
-    private void homeScreen() {
+    private void mainMenu() {
         while (true) {
-            printHeader("Home Screen");
+            printHeader("Welcome to DELI-cious POS");
             printLine("[1] - New Order");
+            printLine("[2] - View Receipt by ID");
             printLine("[0] - Exit");
 
-            int choice = intPrompt("Choose: ");
-            switch (choice) {
+            int option = intPrompt("Choose: ");
+            switch (option) {
                 case 1 -> orderScreen();
+                case 2 -> viewReceiptById();
                 case 0 -> {
                     printLine("Goodbye!");
-                    System.exit(0);
+                    return;
                 }
                 default -> printLine("Invalid option.");
             }
+        }
+    }
+
+    /**
+     * Prompts the user to enter a receipt number and attempts to load the
+     * corresponding receipt file from the disk. Displays the order summary if found.
+     */
+    private void viewReceiptById() {
+        scanner.nextLine();
+        printHeader("Retrieve Receipt");
+        String id = stringPrompt("Enter your receipt number (e.g., 20250523-172201): ");
+        try {
+            new ReceiptManager().loadReceiptById(id);
+        } catch (IOException e) {
+            printLine("Receipt not found " + e.getMessage());
         }
     }
 
