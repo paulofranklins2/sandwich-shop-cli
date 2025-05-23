@@ -16,11 +16,7 @@ public class UserInterface {
 
     private final Order currentOrder = new Order();
 
-    public static void main(String[] args) {
-        new UserInterface().init();
-    }
-
-    private void init() {
+    public void init() {
         homeScreen();
     }
 
