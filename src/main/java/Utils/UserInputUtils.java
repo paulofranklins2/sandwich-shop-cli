@@ -17,4 +17,17 @@ public class UserInputUtils {
             }
         }
     }
+
+    public static String capitalizeWords(String input) {
+        String[] words = input.split(" ");
+        StringBuilder builder = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                builder.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1))
+                        .append(" ");
+            }
+        }
+        return builder.toString().trim();
+    }
 }
