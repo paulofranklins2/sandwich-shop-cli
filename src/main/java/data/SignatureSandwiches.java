@@ -7,8 +7,18 @@ import models.enums.Topping;
 
 import java.util.List;
 
+/**
+ * Provides a static list of predefined {@link SignatureSandwich} presets
+ * with curated ingredients, bread types, and sizes.
+ */
 public class SignatureSandwiches {
 
+    /**
+     * Returns a list of default {@link SignatureSandwich} options.
+     * Each sandwich includes a name, size, bread type, toppings, and toasting preference.
+     *
+     * @return list of SignatureSandwich instances
+     */
     public static List<SignatureSandwich> getAll() {
         return List.of(
                 new SignatureSandwich("BLT", SandwichSize.EIGHT_INCH, BreadType.WHITE,
