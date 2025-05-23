@@ -13,8 +13,18 @@ import static utils.ConsolePrinter.printHeader;
 import static utils.ConsolePrinter.printLine;
 import static utils.UserInputUtils.intPrompt;
 
+/**
+ * Builder class for constructing a {@link Sandwich} based on predefined {@link SignatureSandwich} presets.
+ * Allows users to modify base toppings and extras during the build process.
+ */
 public class SignatureSandwichBuilder {
 
+    /**
+     * Displays a list of {@link SignatureSandwich} options, allows the user to select one,
+     * and optionally modify the toppings and extras. Returns a new {@link Sandwich} instance.
+     *
+     * @return a customized Sandwich based on a signature preset
+     */
     public Sandwich build() {
         List<SignatureSandwich> options = SignatureSandwiches.getAll();
 
