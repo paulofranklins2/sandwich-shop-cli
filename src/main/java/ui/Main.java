@@ -1,4 +1,4 @@
-import ui.UserInterface;
+package ui;
 
 /**
  * Entry point for the sandwich-shop-cli POS application.

@@ -53,7 +53,7 @@
 ## ✅ User Interface
 
 - [x] Create `UserInterface` class with `homeScreen()` and `orderScreen()`
-- [x] Create `Main` entry point to launch `UserInterface`
+- [x] Create `ui.Main` entry point to launch `UserInterface`
 - [x] Implement CLI-based interaction:
   - [x] Add Sandwich
   - [x] Add Drink
