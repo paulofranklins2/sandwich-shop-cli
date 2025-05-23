@@ -8,11 +8,11 @@
 - [x] Created `/docs` folder
 - [x] Added `class-diagram.svg` to documentation
 - [x] Defined enums:
-    - [x] `BreadType`
-    - [x] `SandwichSize`
-    - [x] `DrinkSize`
-    - [x] `Topping`
-    - [x] `ToppingType`
+  - [x] `BreadType`
+  - [x] `SandwichSize`
+  - [x] `DrinkSize`
+  - [x] `Topping`
+  - [x] `ToppingType`
 - [x] Defined project package structure (`com.delicious`)
 - [x] Organized `model/enums` package and cleaned up class locations
 - [x] Created initial UML in Mermaid format
@@ -21,71 +21,69 @@
 
 ---
 
-## 🚧 To Do
-
-### 🧠 Core Models & Interfaces
+## ✅ Core Models & Interfaces
 
 - [x] Implement `Sandwich` class
-    - [ ] Store size, bread, toppings, extras, toasted flag
-    - [ ] Implement `getPrice()` logic using `BigDecimal`
+  - [x] Store size, bread, toppings, extras, toasted flag
+  - [x] Implement `getPrice()` logic using `BigDecimal`
 - [x] Implement `Drink` class
-    - [ ] Store drink size and flavor
-    - [ ] Implement `getPrice()` logic
+  - [x] Store drink size and flavor
+  - [x] Implement `getPrice()` logic
 - [x] Implement `Chips` class
-    - [ ] Store a chip type
-    - [ ] Implement `getPrice()` logic
+  - [x] Store a chip type
+  - [x] Implement `getPrice()` logic
 - [x] Implement `Order` class
-    - [ ] List of `MenuItem` items (sandwiches, drinks, chips)
-    - [ ] `addItem()`, `getTotalPrice()`, `generateReceipt()` methods
-
+  - [x] List of `MenuItem` items (sandwiches, drinks, chips)
+  - [x] `addItem()`, `getPrice()`, `printSummary()` methods
 - [x] Implement `MenuItem` interface
-    - [ ] Ensure `Sandwich`, `Drink`, and `Chips` all implement it
-
-- [x] Implement `Printable` interface (optional for UI summaries)
+  - [x] Ensure `Sandwich`, `Drink`, and `Chips` all implement it
+- [x] Implement `Printable` interface for UI summaries
 
 ---
 
-### 🧾 Receipt and Persistence
+## ✅ Receipt and Persistence
 
 - [x] Create `ReceiptManager` class
-    - [ ] Save orders to `/receipts/yyyyMMdd-hhmmss.txt`
-    - [ ] Auto-create folder if not present
+  - [x] Save orders to `/receipts/yyyyMMdd-hhmmss.txt`
+  - [x] Auto-create folder if not present
+  - [x] Capture `Printable` output using `SummaryCapture`
 
 ---
 
-### 💻 User Interface
+## ✅ User Interface
 
-- [ ] Create `Application` class with:
-    - [ ] `mainMenu()`
-    - [ ] `orderMenu()`
-- [ ] Implement CLI-based interaction:
-    - [ ] Add Sandwich
-    - [ ] Add Drink
-    - [ ] Add Chips
-    - [ ] Checkout (display + confirm receipt save)
-    - [ ] Cancel order
-- [ ] Add input validation and user prompts
+- [x] Create `UserInterface` class with `homeScreen()` and `orderScreen()`
+- [x] Create `Main` entry point to launch `UserInterface`
+- [x] Implement CLI-based interaction:
+  - [x] Add Sandwich
+  - [x] Add Drink
+  - [x] Add Chips
+  - [x] Checkout (display + confirm receipt save)
+  - [x] Cancel order
+- [x] Add input validation and generic prompt utilities
+- [x] Extract `SandwichBuilder`, `DrinkBuilder`, and `ChipBuilder`
+- [x] Add `ConsolePrinter` for clean CLI output
 
 ---
 
-### 🎁 Bonus Features (Optional)
+## 🚧 Bonus Features (Optional)
 
 - [ ] Add support for Signature Sandwiches (BLT, Philly, etc.)
-    - [ ] Inherit from `Sandwich` class
-    - [ ] Allow modification (remove/add toppings)
+  - [ ] Inherit from `Sandwich` class
+  - [ ] Allow modification (remove/add toppings)
 
 ---
 
-### 🧪 Testing & Polish
+## 🚧 Testing & Polish
 
 - [ ] Add unit tests for:
-    - [ ] `getPrice()` methods
-    - [ ] `ReceiptManager`
-    - [ ] `Order total`
+  - [ ] `getPrice()` methods
+  - [ ] `ReceiptManager`
+  - [ ] `Order total`
 - [ ] Add helpful error messages in CLI
-- [ ] Confirm BigDecimal prices round properly
+- [ ] Confirm `BigDecimal` prices round properly
 - [ ] Clean up and refactor duplicate logic (if any)
-- [ ] Final code cleanup and JavaDoc
+- [ ] Final code cleanup and Javadoc
 
 ---
 
@@ -93,4 +91,4 @@
 
 - [ ] Record demo for class presentation
 - [ ] Prepare to walk through UML and interesting code piece
-- [ ] Tag the final release on GitHub
+- [ ] Tag the final release on GitHub  
