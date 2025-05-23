@@ -70,7 +70,7 @@
 
 - [x] Add support for Signature Sandwiches (BLT, Philly, etc.)
   - [x] Inherit from `Sandwich` class
-  - [ ] Allow modification (remove/add toppings)
+  - [x] Allow modification (remove/add toppings)
 
 ---
 
