@@ -3,6 +3,7 @@ package ui;
 import builders.ChipBuilder;
 import builders.DrinkBuilder;
 import builders.SandwichBuilder;
+import builders.SignatureSandwichBuilder;
 import models.Order;
 import persistence.ReceiptManager;
 
@@ -43,17 +44,22 @@ public class UserInterface {
         while (true) {
             printHeader("Order Screen");
             printLine("[1] - Add Sandwich");
-            printLine("[2] - Add Drink");
-            printLine("[3] - Add Chips");
-            printLine("[4] - Checkout");
+            printLine("[2] - Add Signature Sandwich");
+            printLine("[3] - Add Drink");
+            printLine("[4] - Add Chips");
+            printLine("[5] - Checkout");
             printLine("[0] - Cancel Order");
 
             int choice = intPrompt("Choose: ");
             switch (choice) {
                 case 1 -> currentOrder.addItem(new SandwichBuilder().build());
-                case 2 -> currentOrder.addItem(new DrinkBuilder().build());
-                case 3 -> currentOrder.addItem(new ChipBuilder().build());
-                case 4 -> {
+                case 2 -> {
+                    var signature = new SignatureSandwichBuilder().build();
+                    if (signature != null) currentOrder.addItem(signature);
+                }
+                case 3 -> currentOrder.addItem(new DrinkBuilder().build());
+                case 4 -> currentOrder.addItem(new ChipBuilder().build());
+                case 5 -> {
                     checkoutScreen();
                     return;
                 }
