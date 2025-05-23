@@ -10,16 +10,32 @@ import java.math.BigDecimal;
 
 import static utils.UserInputUtils.capitalizeWords;
 
+/**
+ * Represents a drink item that can be added to an order.
+ * A drink has a specific {@link DrinkSize} and {@link DrinkFlavor},
+ * and its price is determined by its size.
+ */
 public class Drink implements MenuItem, Printable {
-    DrinkSize drinkSize;
-    DrinkFlavor drinkFlavor;
 
+    private final DrinkSize drinkSize;
+    private final DrinkFlavor drinkFlavor;
+
+    /**
+     * Constructs a Drink with the specified size and flavor.
+     *
+     * @param drinkSize   the selected size of the drink
+     * @param drinkFlavor the selected flavor of the drink
+     */
     public Drink(DrinkSize drinkSize, DrinkFlavor drinkFlavor) {
         this.drinkSize = drinkSize;
         this.drinkFlavor = drinkFlavor;
     }
 
-    // Calculate drink price based on size
+    /**
+     * Returns the price of the drink based on its {@link DrinkSize}.
+     *
+     * @return the drink price as a {@link BigDecimal}
+     */
     @Override
     public BigDecimal getPrice() {
         return switch (drinkSize) {
@@ -29,7 +45,11 @@ public class Drink implements MenuItem, Printable {
         };
     }
 
-    // Print a formatted summary of the drink, including flavor, size, and price
+    /**
+     * Prints a formatted summary of the drink, including its flavor, size, and price.
+     *
+     * @param print the output stream to print to
+     */
     @Override
     public void printSummary(PrintStream print) {
         String flavor = capitalizeWords(drinkFlavor.toString().replace("_", " ").toLowerCase());
