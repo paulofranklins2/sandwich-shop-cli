@@ -1,46 +1,100 @@
 package ui;
 
+import builders.ChipBuilder;
+import builders.DrinkBuilder;
+import builders.SandwichBuilder;
+import models.Order;
+import persistence.ReceiptManager;
+
+import java.io.IOException;
+
+import static utils.ConsolePrinter.printHeader;
+import static utils.ConsolePrinter.printLine;
+import static utils.UserInputUtils.intPrompt;
+
 public class UserInterface {
 
+    private final Order currentOrder = new Order();
+
+    public static void main(String[] args) {
+        new UserInterface().init();
+    }
+
+    private void init() {
+        homeScreen();
+    }
+
     private void homeScreen() {
-        System.out.println("=== Home Screen ===");
-        System.out.println("[1] - Add ");
-        System.out.println("[0] - Exit");
+        while (true) {
+            printHeader("Home Screen");
+            printLine("[1] - New Order");
+            printLine("[0] - Exit");
+
+            int choice = intPrompt("Choose: ");
+            switch (choice) {
+                case 1 -> orderScreen();
+                case 0 -> {
+                    printLine("Goodbye!");
+                    System.exit(0);
+                }
+                default -> printLine("Invalid option.");
+            }
+        }
     }
 
-    public void orderScreen() {
-        System.out.println("=== Order Screen ===");
-        System.out.println("[1] - Add Sandwich");
-        System.out.println("[2] - Add Drink");
-        System.out.println("[3] - Add Chips");
-        System.out.println("[4] - Checkout");
-        System.out.println("[0] - Cancel Order");
+    private void orderScreen() {
+        currentOrder.clear();
+        while (true) {
+            printHeader("Order Screen");
+            printLine("[1] - Add Sandwich");
+            printLine("[2] - Add Drink");
+            printLine("[3] - Add Chips");
+            printLine("[4] - Checkout");
+            printLine("[0] - Cancel Order");
+
+            int choice = intPrompt("Choose: ");
+            switch (choice) {
+                case 1 -> currentOrder.addItem(new SandwichBuilder().build());
+                case 2 -> currentOrder.addItem(new DrinkBuilder().build());
+                case 3 -> currentOrder.addItem(new ChipBuilder().build());
+                case 4 -> {
+                    checkoutScreen();
+                    return;
+                }
+                case 0 -> {
+                    printLine("Order canceled.");
+                    return;
+                }
+                default -> printLine("Invalid option.");
+            }
+        }
     }
 
-    //Home Screen
-    //o The home screen should give the user the following options. The
-    //application should continue to run until the user chooses to exit.
-    //§ 1) New Order
-    //§ 0) Exit - exit the application
-    //• Order Screen - All entries should show the newest entries first
-    //o 1) Add Sandwich
-    //o 2) Add Drink
-    //o 3) Add Chips
-    //o 4) Checkout
-    //o 0) Cancel Order - delete the order and go back to the home page
-    //• Add Sandwich - the add sandwich screen will walk the user through
-    //several options to create the sandwich
-    //o Select your bread:
-    //o Sandwich size:
-    //o Toppings: - the user should be able to add extras of each topping
-    //§ Meat:
-    //§ Cheese:
-    //§ Other toppings:
-    //§ Select sauces:
-    //o Would you like the sandwich toasted?
-    //• Add Drink - select drink size and flavor
-    //• Add Chips - select chip type
-    //• Checkout - display the order details and the price
-    //o Confirm - create the receipt file and go back to the home screen
-    //o Cancel - delete order and go back to the home screen
+    private void checkoutScreen() {
+        printHeader("Checkout");
+
+        if (currentOrder.isEmpty()) {
+            printLine("No items in the order.");
+            return;
+        }
+
+        currentOrder.printSummary(System.out);
+        double total = currentOrder.getPrice().doubleValue();
+
+        System.out.printf("Total: $%.2f%n", total);
+        printLine("[1] - Confirm Order");
+        printLine("[0] - Cancel Order");
+
+        int confirm = intPrompt("Choose: ");
+        if (confirm == 1) {
+            try {
+                new ReceiptManager().saveOrderReceipt(currentOrder.getItems(), total);
+                printLine("Order confirmed and saved. Thank you!");
+            } catch (IOException e) {
+                printLine("Failed to save receipt: " + e.getMessage());
+            }
+        } else {
+            printLine("Order canceled.");
+        }
+    }
 }
