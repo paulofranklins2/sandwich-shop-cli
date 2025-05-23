@@ -19,6 +19,7 @@ public class Drink implements MenuItem, Printable {
         this.drinkFlavor = drinkFlavor;
     }
 
+    // Calculate drink price based on size
     @Override
     public BigDecimal getPrice() {
         return switch (drinkSize) {
@@ -28,6 +29,7 @@ public class Drink implements MenuItem, Printable {
         };
     }
 
+    // Print a formatted summary of the drink, including flavor, size, and price
     @Override
     public void printSummary(PrintStream print) {
         String flavor = capitalizeWords(drinkFlavor.toString().replace("_", " ").toLowerCase());
