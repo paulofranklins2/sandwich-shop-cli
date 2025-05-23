@@ -8,8 +8,17 @@ import java.util.List;
 import static utils.ConsolePrinter.printLine;
 import static utils.UserInputUtils.*;
 
+/**
+ * Utility class for editing sandwich toppings through a CLI interface.
+ * Allows users to remove or add toppings and designate extra toppings.
+ */
 public class ToppingEditor {
 
+    /**
+     * Allows the user to remove toppings from the given list interactively.
+     *
+     * @param toppings the list of current toppings
+     */
     public static void removeToppings(List<Topping> toppings) {
         if (toppings.isEmpty()) return;
 
@@ -31,6 +40,13 @@ public class ToppingEditor {
         }
     }
 
+    /**
+     * Allows the user to add toppings interactively.
+     * Toppings can optionally be marked as "extra" and added to the extras list.
+     *
+     * @param toppings the list of base toppings
+     * @param extras   the list of extra toppings
+     */
     public static void addToppings(List<Topping> toppings, List<Topping> extras) {
         boolean adding = intPrompt("Would you like to add any toppings? (1 = yes, 0 = no): ") == 1;
         while (adding) {
