@@ -2,6 +2,10 @@ package models.enums;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Getter
 public enum Topping {
     /*
@@ -53,5 +57,11 @@ public enum Topping {
 
     public boolean isType(ToppingType queryType) {
         return this.type == queryType;
+    }
+
+    public static List<Topping> getByType(ToppingType toppingType) {
+        return Arrays.stream(Topping.values())
+                .filter(t -> t.type == toppingType)
+                .collect(Collectors.toList());
     }
 }
