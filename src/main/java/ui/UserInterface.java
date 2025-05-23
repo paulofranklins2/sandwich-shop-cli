@@ -106,8 +106,9 @@ public class UserInterface {
         int confirm = intPrompt("Choose: ");
         if (confirm == 1) {
             try {
-                new ReceiptManager().saveOrderReceipt(currentOrder.getItems(), total);
-                printLine("Order confirmed and saved. Thank you!");
+                String receiptNumber = new ReceiptManager().saveOrderReceipt(currentOrder.getItems(), total);
+                printLine("Order confirmed and saved.");
+                printLine("📄 Your receipt number: " + receiptNumber);
             } catch (IOException e) {
                 printLine("Failed to save receipt: " + e.getMessage());
             }
