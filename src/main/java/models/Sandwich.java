@@ -2,6 +2,7 @@ package models;
 
 import interfaces.MenuItem;
 import interfaces.Printable;
+import lombok.Getter;
 import models.enums.BreadType;
 import models.enums.SandwichSize;
 import models.enums.Topping;
@@ -14,8 +15,23 @@ import java.util.List;
 import static utils.UserInputUtils.formatEnum;
 import static utils.UserInputUtils.formatEnumList;
 
-public record Sandwich(SandwichSize sandwichSize, BreadType breadType, List<Topping> toppings,
-                       List<Topping> extraToppings, Boolean isToasted) implements MenuItem, Printable {
+@Getter
+public class Sandwich implements MenuItem, Printable {
+
+    private final SandwichSize sandwichSize;
+    private final BreadType breadType;
+    private final List<Topping> toppings;
+    private final List<Topping> extraToppings;
+    private final Boolean isToasted;
+
+    public Sandwich(SandwichSize sandwichSize, BreadType breadType, List<Topping> toppings,
+                    List<Topping> extraToppings, Boolean isToasted) {
+        this.sandwichSize = sandwichSize;
+        this.breadType = breadType;
+        this.toppings = toppings;
+        this.extraToppings = extraToppings;
+        this.isToasted = isToasted;
+    }
 
     @Override
     public BigDecimal getPrice() {
@@ -47,7 +63,7 @@ public record Sandwich(SandwichSize sandwichSize, BreadType breadType, List<Topp
     @Override
     public void printSummary(PrintStream out) {
         out.println("Sandwich:");
-        out.println("- Size: " + sandwichSize); // already formatted in enum
+        out.println("- Size: " + sandwichSize);
         out.println("- Bread: " + formatEnum(breadType));
         out.println("- Toasted: " + (isToasted ? "Yes" : "No"));
         out.println("- Toppings: " + formatEnumList(toppings));
@@ -55,8 +71,7 @@ public record Sandwich(SandwichSize sandwichSize, BreadType breadType, List<Topp
         out.printf("- Price: $%.2f%n", getPrice());
     }
 
-    // Meat Pricing
-    private BigDecimal getMeatPrice(SandwichSize size) {
+    protected BigDecimal getMeatPrice(SandwichSize size) {
         return switch (size) {
             case FOUR_INCH -> BigDecimal.valueOf(1.00);
             case EIGHT_INCH -> BigDecimal.valueOf(2.00);
@@ -64,7 +79,7 @@ public record Sandwich(SandwichSize sandwichSize, BreadType breadType, List<Topp
         };
     }
 
-    private BigDecimal getExtraMeatPrice(SandwichSize size) {
+    protected BigDecimal getExtraMeatPrice(SandwichSize size) {
         return switch (size) {
             case FOUR_INCH -> BigDecimal.valueOf(0.50);
             case EIGHT_INCH -> BigDecimal.valueOf(1.00);
@@ -72,8 +87,7 @@ public record Sandwich(SandwichSize sandwichSize, BreadType breadType, List<Topp
         };
     }
 
-    // Cheese Pricing
-    private BigDecimal getCheesePrice(SandwichSize size) {
+    protected BigDecimal getCheesePrice(SandwichSize size) {
         return switch (size) {
             case FOUR_INCH -> BigDecimal.valueOf(0.75);
             case EIGHT_INCH -> BigDecimal.valueOf(1.50);
@@ -81,7 +95,7 @@ public record Sandwich(SandwichSize sandwichSize, BreadType breadType, List<Topp
         };
     }
 
-    private BigDecimal getExtraCheesePrice(SandwichSize size) {
+    protected BigDecimal getExtraCheesePrice(SandwichSize size) {
         return switch (size) {
             case FOUR_INCH -> BigDecimal.valueOf(0.30);
             case EIGHT_INCH -> BigDecimal.valueOf(0.60);
