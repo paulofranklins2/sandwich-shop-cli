@@ -1,5 +1,8 @@
 package models.enums;
 
+/**
+ * Represents the available chip flavor options that a customer can choose from.
+ */
 public enum ChipFlavor {
     LAYS_CLASSIC,
     DORITOS_NACHO_CHEESE,
