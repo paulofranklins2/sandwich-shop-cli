@@ -1,0 +1,23 @@
+=== Order Receipt ===
+Date: 2025-05-23 16:54:36
+
+Sandwich:
+- Size: 12" inches
+- Bread: Wheat
+- Toasted: Yes
+- Toppings: Salami, Steak, Provolone, Mayo
+- Extra Toppings: Salami, Provolone
+- Price: $19.15
+Sandwich:
+- Size: 12" inches
+- Bread: Italian
+- Toasted: Yes
+- Toppings: Steak, American
+- Extra Toppings: American
+- Price: $14.65
+Drink: Red Bull (Large) - $3.00
+Drink: Fanta (Small) - $2.00
+Chips: Kettle Sea Salt - $1.50
+Chips: Takis Fuego - $1.50
+
+TOTAL: $41.80
