@@ -13,6 +13,6 @@ public enum SandwichSize {
 
     @Override
     public String toString() {
-        return label;
+        return label + " inches";
     }
 }
