@@ -1,12 +1,17 @@
 package models;
 
 import interfaces.MenuItem;
+import interfaces.Printable;
 import lombok.Getter;
 import models.enums.ChipFlavor;
 
+import java.io.PrintStream;
 import java.math.BigDecimal;
 
-public class Chip implements MenuItem {
+import static Utils.UserInputUtils.capitalizeWords;
+
+public class Chip implements MenuItem, Printable {
+
     @Getter
     private ChipFlavor chipFlavor;
 
@@ -20,7 +25,8 @@ public class Chip implements MenuItem {
     }
 
     @Override
-    public String toString() {
-        return "Chip: " + chipFlavor.name().replace("_", " ");
+    public void printSummary(PrintStream out) {
+        String flavor = capitalizeWords(chipFlavor.toString().replace("_", " ").toLowerCase());
+        out.printf("Chips: %s - $%.2f%n", flavor, getPrice());
     }
 }
