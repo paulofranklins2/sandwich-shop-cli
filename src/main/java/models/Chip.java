@@ -18,4 +18,9 @@ public class Chip implements MenuItem {
     public BigDecimal getPrice() {
         return new BigDecimal("1.50");
     }
+
+    @Override
+    public String toString() {
+        return "Chip: " + chipFlavor.name().replace("_", " ");
+    }
 }
