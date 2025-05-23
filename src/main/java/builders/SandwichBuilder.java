@@ -1,42 +1,33 @@
 package builders;
 
 import models.Sandwich;
-import models.enums.*;
+import models.enums.BreadType;
+import models.enums.SandwichSize;
+import models.enums.Topping;
+import utils.ToppingEditor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.UserInputUtils.*;
+import static utils.ConsolePrinter.printHeader;
+import static utils.UserInputUtils.intPrompt;
+import static utils.UserInputUtils.promptOption;
 
 public class SandwichBuilder {
+
     public Sandwich build() {
-        BreadType breadType = promptOption("Select Bread Type:", BreadType.values());
-        SandwichSize sandwichSize = promptOption("Select Sandwich Size:", SandwichSize.values());
+        printHeader("Custom Sandwich");
+
+        BreadType breadType = promptOption("Choose bread:", BreadType.values());
+        SandwichSize sandwichSize = promptOption("Choose size:", SandwichSize.values());
 
         List<Topping> toppings = new ArrayList<>();
-        List<Topping> extraToppings = new ArrayList<>();
+        List<Topping> extras = new ArrayList<>();
 
-        boolean addingToppings = true;
-        while (addingToppings) {
-            ToppingType toppingType = promptOption("Select Topping Category:", ToppingType.values());
-            List<Topping> availableToppings = Topping.getByType(toppingType);
-            printEnumOptions(availableToppings);
-            int index = intPrompt("Choose topping: ");
-            if (index >= 0 && index < availableToppings.size()) {
-                Topping selected = availableToppings.get(index);
-                toppings.add(selected);
-                if (intPrompt("Add extra? (1 = yes, 0 = no): ") == 1) extraToppings.add(selected);
-                addingToppings = intPrompt("Add more toppings? (1 = yes, 0 = no): ") == 1;
-            }
-        }
+        ToppingEditor.addToppings(toppings, extras);
 
         boolean isToasted = intPrompt("Toast sandwich? (1 = yes, 0 = no): ") == 1;
-        return new Sandwich(sandwichSize, breadType, toppings, extraToppings, isToasted);
-    }
 
-    private void printEnumOptions(List<? extends Enum<?>> list) {
-        for (int i = 0; i < list.size(); i++) {
-            System.out.printf("[%d] - %s%n", i, capitalizeWords(list.get(i).toString().replace("_", " ").toLowerCase()));
-        }
+        return new Sandwich(sandwichSize, breadType, toppings, extras, isToasted);
     }
 }
