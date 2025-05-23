@@ -15,80 +15,86 @@
   - [x] `ToppingType`
 - [x] Defined project package structure (`com.delicious`)
 - [x] Organized `model/enums` package and cleaned up class locations
-- [x] Created initial UML in Mermaid format
-- [x] Set up `feature/init-readme` and `feature/docs-class-diagram` branches
-- [x] Documented and committed enum creation under `feature/model-enums`
+- [x] Created UML class diagram in Mermaid and SVG format
+- [x] Implemented core models and builders
+- [x] Implemented receipt manager with printable capture
+- [x] Added full CLI with input validation and user prompts
+- [x] Added Signature Sandwich support (with customization)
+- [x] Created topping editor for add/remove
+- [x] Generated Javadoc using Maven
 
 ---
 
-## ✅ Core Models & Interfaces
+## 🚧 Core Models & Interfaces
 
 - [x] Implement `Sandwich` class
-  - [x] Store size, bread, toppings, extras, toasted flag
-  - [x] Implement `getPrice()` logic using `BigDecimal`
 - [x] Implement `Drink` class
-  - [x] Store drink size and flavor
-  - [x] Implement `getPrice()` logic
-- [x] Implement `Chips` class
-  - [x] Store a chip type
-  - [x] Implement `getPrice()` logic
+- [x] Implement `Chip` class
 - [x] Implement `Order` class
-  - [x] List of `MenuItem` items (sandwiches, drinks, chips)
-  - [x] `addItem()`, `getPrice()`, `printSummary()` methods
-- [x] Implement `MenuItem` interface
-  - [x] Ensure `Sandwich`, `Drink`, and `Chips` all implement it
-- [x] Implement `Printable` interface for UI summaries
+- [x] Create interfaces: `MenuItem`, `Printable`
+- [x] Add builder classes for each menu item
 
 ---
 
-## ✅ Receipt and Persistence
+## 🚧 Receipt and Persistence
 
-- [x] Create `ReceiptManager` class
-  - [x] Save orders to `/receipts/yyyyMMdd-hhmmss.txt`
-  - [x] Auto-create folder if not present
-  - [x] Capture `Printable` output using `SummaryCapture`
-
----
-
-## ✅ User Interface
-
-- [x] Create `UserInterface` class with `homeScreen()` and `orderScreen()`
-- [x] Create `ui.Main` entry point to launch `UserInterface`
-- [x] Implement CLI-based interaction:
-  - [x] Add Sandwich
-  - [x] Add Drink
-  - [x] Add Chips
-  - [x] Checkout (display + confirm receipt save)
-  - [x] Cancel order
-- [x] Add input validation and generic prompt utilities
-- [x] Extract `SandwichBuilder`, `DrinkBuilder`, and `ChipBuilder`
-- [x] Add `ConsolePrinter` for clean CLI output
+- [x] Create `ReceiptManager` class for file I/O
+- [x] Implement timestamped `.txt` receipts
+- [x] Capture formatted order summaries with `SummaryCapture`
 
 ---
 
-## 🚧 Bonus Features (Optional)
+## 🚧 User Interface
 
-- [x] Add support for Signature Sandwiches (BLT, Philly, etc.)
-  - [x] Inherit from `Sandwich` class
-  - [x] Allow modification (remove/add toppings)
+- [x] CLI-based navigation (`UserInterface`)
+- [x] Modular CLI sections: Add sandwich, drink, chip, signature
+- [x] Add order summary & confirmation
+- [x] Extract reusable prompt utilities
+- [x] Clean CLI output with `ConsolePrinter`
 
 ---
 
 ## 🚧 Testing & Polish
 
-- [ ] Add unit tests for:
-  - [ ] `getPrice()` methods
+- [ ] Add JUnit tests:
+  - [ ] `getPrice()` methods (sandwich, drink, chips)
   - [ ] `ReceiptManager`
-  - [ ] `Order total`
-- [ ] Add helpful error messages in CLI
-- [ ] Confirm `BigDecimal` prices round properly
-- [ ] Clean up and refactor duplicate logic (if any)
-- [ ] Final code cleanup and Javadoc
+  - [ ] `Order`
+- [ ] Add CLI usability edge cases
+- [ ] Final code cleanup and consistent Javadoc
 
 ---
 
-## 🧹 Post-Project
+## 🚧 Bonus Features
 
-- [ ] Record demo for class presentation
-- [ ] Prepare to walk through UML and interesting code piece
-- [ ] Tag the final release on GitHub  
+- [x] Add Signature Sandwiches
+- [x] Allow topping modifications (add/remove on any sub)
+- [ ] Add combo deals, discounts, nutrition facts
+
+---
+
+## 📁 Current Project Structure
+
+```text
+sandwich-shop-cli/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── app/                 # Main launcher
+│   │   │   └── builders/            # Builders for Sandwich, Drink, Chip, Signature
+│   │   │   └── data/                # Signature sandwich data source
+│   │   │   └── interfaces/          # MenuItem, Printable
+│   │   │   └── models/              # Core models
+│   │   │   │   └── enums/           # All enum types (Topping, Sizes, etc.)
+│   │   │   └── persistence/         # ReceiptManager & summary output
+│   │   │   └── ui/                  # CLI controller (UserInterface)
+│   │   │   └── utils/               # ToppingEditor, UserInputUtils, ConsolePrinter
+│   │   └── resources/              # Saved receipts
+├── docs/                           # UML diagrams and design notes
+├── test/                           # (Upcoming) Unit tests
+├── README.md
+├── TODO.md
+├── EXTRAS.md
+├── pom.xml
+└── .gitignore
+```
