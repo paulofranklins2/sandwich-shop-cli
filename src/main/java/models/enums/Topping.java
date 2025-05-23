@@ -6,11 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Represents all available toppings that can be added to a {@link models.Sandwich}.
+ * Each topping is associated with a {@link ToppingType} category, such as MEAT, CHEESE, REGULAR, or SAUCE.
+ */
 @Getter
 public enum Topping {
-    /*
-     * Meat Only
-     */
+
+    // Meat Toppings
     STEAK(ToppingType.MEAT),
     HAM(ToppingType.MEAT),
     SALAMI(ToppingType.MEAT),
@@ -18,17 +21,13 @@ public enum Topping {
     CHICKEN(ToppingType.MEAT),
     BACON(ToppingType.MEAT),
 
-    /*
-     * Cheese Only
-     */
+    // Cheese Toppings
     AMERICAN(ToppingType.CHEESE),
     PROVOLONE(ToppingType.CHEESE),
     CHEDDAR(ToppingType.CHEESE),
     SWISS(ToppingType.CHEESE),
 
-    /*
-     * Regular Only
-     */
+    // Regular Toppings
     LETTUCE(ToppingType.REGULAR),
     PEPPERS(ToppingType.REGULAR),
     ONIONS(ToppingType.REGULAR),
@@ -39,9 +38,7 @@ public enum Topping {
     GUACAMOLE(ToppingType.REGULAR),
     MUSHROOMS(ToppingType.REGULAR),
 
-    /*
-     * Sauce Only
-     */
+    // Sauce Toppings
     MAYO(ToppingType.SAUCE),
     MUSTARD(ToppingType.SAUCE),
     KETCHUP(ToppingType.SAUCE),
@@ -55,10 +52,22 @@ public enum Topping {
         this.type = type;
     }
 
+    /**
+     * Checks if this topping belongs to the specified {@link ToppingType}.
+     *
+     * @param queryType the topping type to check against
+     * @return true if this topping matches the provided type; false otherwise
+     */
     public boolean isType(ToppingType queryType) {
         return this.type == queryType;
     }
 
+    /**
+     * Retrieves all toppings that belong to a given {@link ToppingType}.
+     *
+     * @param toppingType the category to filter by
+     * @return a list of toppings of the specified type
+     */
     public static List<Topping> getByType(ToppingType toppingType) {
         return Arrays.stream(Topping.values())
                 .filter(t -> t.type == toppingType)
