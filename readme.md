@@ -20,9 +20,9 @@ object-oriented design, modularity, and user-friendly interaction through a text
 - 💰 Accurate pricing using `BigDecimal`
 - 📋 Order summary and confirmation screen
 - 📄 Receipt generation stored with timestamps
+- 🔍 Lookup past receipts by receipt number
 - 🧩 Modular and maintainable structure (Interfaces, Enums, Builders)
 - 🧪 Ready for JUnit testing and JavaDoc documentation
-
 ---
 
 ## 🧭 Menu Flow Overview
