@@ -18,6 +18,22 @@ public class UserInputUtils {
         }
     }
 
+    public static <T> T promptOption(String title, T[] options) {
+        System.out.println("\n" + title);
+        for (int i = 0; i < options.length; i++) {
+            String label = capitalizeWords(options[i].toString().replace("_", " ").toLowerCase());
+            System.out.printf("[%d] - %s%n", i, label);
+        }
+
+        while (true) {
+            int input = intPrompt("Choose: ");
+            if (input >= 0 && input < options.length) {
+                return options[input];
+            }
+            System.out.println("Invalid option. Please enter a number between 0 and " + (options.length - 1) + ".");
+        }
+    }
+
     public static String capitalizeWords(String input) {
         String[] words = input.split(" ");
         StringBuilder builder = new StringBuilder();
