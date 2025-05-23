@@ -8,7 +8,7 @@ import models.enums.ChipFlavor;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 
-import static Utils.UserInputUtils.capitalizeWords;
+import static utils.UserInputUtils.capitalizeWords;
 
 public class Chip implements MenuItem, Printable {
 
