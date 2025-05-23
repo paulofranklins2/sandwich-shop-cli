@@ -1,12 +1,16 @@
 package models;
 
 import interfaces.MenuItem;
+import interfaces.Printable;
 import models.enums.DrinkFlavor;
 import models.enums.DrinkSize;
 
+import java.io.PrintStream;
 import java.math.BigDecimal;
 
-public class Drink implements MenuItem {
+import static Utils.UserInputUtils.capitalizeWords;
+
+public class Drink implements MenuItem, Printable {
     DrinkSize drinkSize;
     DrinkFlavor drinkFlavor;
 
@@ -25,7 +29,9 @@ public class Drink implements MenuItem {
     }
 
     @Override
-    public String toString() {
-        return "Drink Size: " + drinkSize.toString() + "\nDrink Flavor: " + drinkFlavor.name().replace("_", " ");
+    public void printSummary(PrintStream print) {
+        String flavor = capitalizeWords(drinkFlavor.toString().replace("_", " ").toLowerCase());
+        String size = capitalizeWords(drinkSize.toString().replace("_", " ").toLowerCase());
+        print.printf("Drink: %s (%s) - $%.2f%n", flavor, size, getPrice());
     }
 }
