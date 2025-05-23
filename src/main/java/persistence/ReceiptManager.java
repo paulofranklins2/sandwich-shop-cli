@@ -61,4 +61,26 @@ public class ReceiptManager {
     private String formattedDateTime(LocalDateTime dateTime, DateTimeFormatter formatter) {
         return dateTime.format(formatter);
     }
+
+    /**
+     * Loads and displays the contents of a receipt file based on the provided receipt ID.
+     * This method reads from the 'src/main/resources/receipt/' directory and prints the
+     * receipt to the console. If the file is not found, an IOException is thrown.
+     *
+     * @param receiptId the filename of the receipt (e.g., "20250523-172201")
+     * @throws IOException if the receipt file cannot be found or read
+     */
+    public void loadReceiptById(String receiptId) throws IOException {
+        String PATH = "src/main/resources/receipt/";
+        String fullPath = PATH + receiptId;
+
+        try (var reader = new java.util.Scanner(new java.io.File(fullPath))) {
+            System.out.println("=== Receipt: " + receiptId + " ===");
+            while (reader.hasNextLine()) {
+                System.out.println(reader.nextLine());
+            }
+        } catch (IOException e) {
+            throw new IOException("Unable to locate receipt with ID: " + receiptId + ". Please ensure the ID is correct and try again.");
+        }
+    }
 }
