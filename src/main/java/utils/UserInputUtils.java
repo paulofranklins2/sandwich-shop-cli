@@ -1,7 +1,9 @@
 package utils;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class UserInputUtils {
     public static final Scanner scanner = new Scanner(System.in);
@@ -45,5 +47,15 @@ public class UserInputUtils {
             }
         }
         return builder.toString().trim();
+    }
+
+    public static <T extends Enum<T>> String formatEnumList(List<T> list) {
+        return list.stream()
+                .map(e -> capitalizeWords(e.toString().replace("_", " ").toLowerCase()))
+                .collect(Collectors.joining(", "));
+    }
+
+    public static <T extends Enum<T>> String formatEnum(T e) {
+        return capitalizeWords(e.toString().replace("_", " ").toLowerCase());
     }
 }
