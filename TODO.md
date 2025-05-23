@@ -69,6 +69,7 @@
 
 - [x] Add Signature Sandwiches
 - [x] Allow topping modifications (add/remove on any sub)
+- [x] Enable receipt lookup by receipt number
 - [ ] Add combo deals, discounts, nutrition facts
 
 ---
