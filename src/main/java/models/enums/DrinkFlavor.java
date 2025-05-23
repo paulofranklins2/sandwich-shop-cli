@@ -19,5 +19,5 @@ public enum DrinkFlavor {
     TROPICANA,
     MINUTE_MAID,
     V8,
-    VITAMIN_WATER,
+    VITAMIN_WATER
 }
