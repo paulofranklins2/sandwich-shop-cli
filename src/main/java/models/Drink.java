@@ -2,6 +2,7 @@ package models;
 
 import interfaces.MenuItem;
 import interfaces.Printable;
+import lombok.Getter;
 import models.enums.DrinkFlavor;
 import models.enums.DrinkSize;
 
@@ -15,8 +16,8 @@ import static utils.UserInputUtils.capitalizeWords;
  * A drink has a specific {@link DrinkSize} and {@link DrinkFlavor},
  * and its price is determined by its size.
  */
+@Getter
 public class Drink implements MenuItem, Printable {
-
     private final DrinkSize drinkSize;
     private final DrinkFlavor drinkFlavor;
 
