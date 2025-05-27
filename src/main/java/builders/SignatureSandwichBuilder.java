@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static utils.ConsolePrinter.printHeader;
-import static utils.UserPromptUtils.intPrompt;
+import static utils.UserPromptUtils.*;
 
 /**
  * Builds a {@link Sandwich} using a preset {@link SignatureSandwich}.
@@ -25,6 +25,7 @@ public class SignatureSandwichBuilder {
      * @return a custom Sandwich based on a preset
      */
     public Sandwich build() {
+        clearScreen();
         List<SignatureSandwich> options = SignatureSandwiches.getAll();
 
         printHeader("Signature Sandwiches");
@@ -46,6 +47,8 @@ public class SignatureSandwichBuilder {
         ToppingEditor.removeToppings(toppings);
         ToppingEditor.addToppings(toppings, extras);
 
+        scanner.nextLine();
+        promptToContinue();
         return new Sandwich(base.getSandwichSize(), base.getBreadType(), toppings, extras, base.getIsToasted());
     }
 }

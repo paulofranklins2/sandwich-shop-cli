@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static utils.UserPromptUtils.*;
+
 /**
  * Handles saving order receipts to files.
  * Makes a file with a timestamp and the full order details + total.
@@ -65,8 +67,11 @@ public class ReceiptManager {
             while (reader.hasNextLine()) {
                 System.out.println(reader.nextLine());
             }
+            promptToContinue();
         } catch (IOException e) {
-            throw new IOException("Couldn't find the receipt with ID: " + receiptId);
+            System.out.println("Couldn't find the receipt with ID: " + receiptId);
+            promptToContinue();
+//            throw new IOException("Couldn't find the receipt with ID: " + receiptId);
         }
     }
 }

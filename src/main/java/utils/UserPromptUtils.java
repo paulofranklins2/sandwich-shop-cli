@@ -52,7 +52,7 @@ public class UserPromptUtils {
      *
      * @param title   the message above the list
      * @param options the things they can pick from
-     * @param <T>     whatever type those things are
+     * @param <T>     whatever type's things are
      * @return the option they picked
      */
     public static <T> T promptOption(String title, T[] options) {
@@ -112,5 +112,24 @@ public class UserPromptUtils {
      */
     public static <T extends Enum<T>> String formatEnum(T e) {
         return capitalizeWords(e.toString().replace("_", " ").toLowerCase());
+    }
+
+    /**
+     * Prints a bunch of empty lines to simulate clearing the console.
+     * It doesn’t clear the screen but gives a similar effect.
+     */
+    public static void clearScreen() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+    }
+
+    /**
+     * Pauses until the user hits Enter, then "clears" the console.
+     */
+    public static void promptToContinue(){
+        System.out.print("Press Enter to continue... ");
+        scanner.nextLine();
+        clearScreen();
     }
 }

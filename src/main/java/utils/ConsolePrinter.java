@@ -19,7 +19,7 @@ public class ConsolePrinter {
      * Prints a menu option like [1] - Option Name.
      *
      * @param index number for the option
-     * @param label what the option is
+     * @param label what is the option
      */
     public static void printOption(int index, String label) {
         System.out.printf("[%d] - %s%n", index, label);

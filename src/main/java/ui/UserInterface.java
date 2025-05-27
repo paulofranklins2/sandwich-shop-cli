@@ -35,6 +35,7 @@ public class UserInterface {
      */
     private void mainMenu() {
         while (true) {
+            clearScreen();
             printHeader("Welcome to Sandwich Shop POS");
             System.out.println("[1] - New Order");
             System.out.println("[2] - View Receipt by ID");
@@ -54,10 +55,11 @@ public class UserInterface {
     }
 
     /**
-     * Asks for a receipt number and tries to load and show it from file.
+     * Asks for a receipt number and tries to load and show it from a file.
      */
     private void viewReceiptById() {
         scanner.nextLine();
+        clearScreen();
         printHeader("Retrieve Receipt");
         String id = stringPrompt("Enter your receipt number (e.g., 20250523-172201): ");
         try {
@@ -73,6 +75,7 @@ public class UserInterface {
     private void orderScreen() {
         currentOrder.clear();
         while (true) {
+            clearScreen();
             printHeader("Order Screen");
             System.out.println("[1] - Add Sandwich");
             System.out.println("[2] - Add Signature Sandwich");
@@ -87,10 +90,7 @@ public class UserInterface {
                 case 2 -> currentOrder.addItem(new SignatureSandwichBuilder().build());
                 case 3 -> currentOrder.addItem(new DrinkBuilder().build());
                 case 4 -> currentOrder.addItem(new ChipBuilder().build());
-                case 5 -> {
-                    checkoutScreen();
-                    return;
-                }
+                case 5 -> checkoutScreen();
                 case 0 -> {
                     System.out.println("Order canceled.");
                     return;
@@ -104,10 +104,13 @@ public class UserInterface {
      * Shows the order summary and lets the user confirm and save it.
      */
     private void checkoutScreen() {
+        clearScreen();
         printHeader("Checkout");
 
         if (currentOrder.isEmpty()) {
             System.out.println("No items in the order.");
+            scanner.nextLine();
+            promptToContinue();
             return;
         }
 
@@ -124,11 +127,15 @@ public class UserInterface {
                 String receiptNumber = new ReceiptManager().saveOrderReceipt(currentOrder.getItems(), total);
                 System.out.println("Order confirmed and saved.");
                 System.out.println("📄 Your receipt number: " + receiptNumber);
+                scanner.nextLine();
+                promptToContinue();
             } catch (IOException e) {
                 System.out.println("Failed to save receipt: " + e.getMessage());
             }
         } else {
             System.out.println("Order canceled.");
+            scanner.nextLine();
+            promptToContinue();
         }
     }
 }

@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static utils.ConsolePrinter.printHeader;
-import static utils.UserPromptUtils.intPrompt;
-import static utils.UserPromptUtils.promptOption;
+import static utils.UserPromptUtils.*;
 
 /**
  * Builds custom {@link Sandwich}es by asking the user to pick a {@link BreadType},
@@ -26,6 +25,7 @@ public class SandwichBuilder {
      * @return a Sandwich made from user choices in the CLI
      */
     public Sandwich build() {
+        clearScreen();
         printHeader("Custom Sandwich");
 
         BreadType breadType = promptOption("Choose bread:", BreadType.values());
@@ -36,8 +36,11 @@ public class SandwichBuilder {
 
         ToppingEditor.addToppings(toppings, extras);
 
+        ToppingEditor.removeToppings(toppings);
         boolean isToasted = intPrompt("Toast sandwich? (1 = yes, 0 = no): ") == 1;
 
+        scanner.nextLine();
+        promptToContinue();
         return new Sandwich(sandwichSize, breadType, toppings, extras, isToasted);
     }
 }
