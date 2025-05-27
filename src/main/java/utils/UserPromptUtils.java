@@ -6,17 +6,16 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /**
- * Utility class for handling user input and formatting enum values in the CLI.
+ * Handy helper for getting user input and making enums look nice in the CLI.
  */
-public class UserInputUtils {
+public class UserPromptUtils {
     public static final Scanner scanner = new Scanner(System.in);
 
     /**
-     * Prompts the user for an integer value with the given message.
-     * Keeps retrying until a valid integer is entered.
+     * Asks the user for a number and keeps trying until they get it right.
      *
-     * @param message the prompt message
-     * @return the integer entered by the user
+     * @param message the message to show the user
+     * @return the number they entered
      */
     public static int intPrompt(String message) {
         while (true) {
@@ -25,17 +24,17 @@ public class UserInputUtils {
                 return scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine(); // clear the invalid input
+                scanner.nextLine(); // clear the bad input
             }
         }
     }
 
     /**
-     * Prompts the user with a custom message and reads a trimmed line of text input.
-     * Retries on input failure to ensure a valid string is returned.
+     * Asks the user for a line of text and trims it.
+     * Keeps retrying if something goes wrong.
      *
-     * @param prompt the message to display to the user
-     * @return the trimmed string entered by the user
+     * @param prompt the message to show
+     * @return the trimmed input
      */
     public static String stringPrompt(String prompt) {
         while (true) {
@@ -48,15 +47,13 @@ public class UserInputUtils {
         }
     }
 
-
     /**
-     * Displays a list of options and prompts the user to select one.
-     * Accepts any array of objects and returns the selected value.
+     * Shows a list of choices and asks the user to pick one.
      *
-     * @param title   the message describing the option group
-     * @param options the available options
-     * @param <T>     the type of option
-     * @return the selected option
+     * @param title   the message above the list
+     * @param options the things they can pick from
+     * @param <T>     whatever type those things are
+     * @return the option they picked
      */
     public static <T> T promptOption(String title, T[] options) {
         System.out.println("\n" + title);
@@ -70,15 +67,15 @@ public class UserInputUtils {
             if (input >= 0 && input < options.length) {
                 return options[input];
             }
-            System.out.println("Invalid option. Please enter a number between 0 and " + (options.length - 1) + ".");
+            System.out.println("Invalid option. Pick a number between 0 and " + (options.length - 1) + ".");
         }
     }
 
     /**
-     * Capitalizes each word in a given string.
+     * Capitalizes each word in a string.
      *
-     * @param input the string to be capitalized
-     * @return a capitalized version of the input
+     * @param input the string to change
+     * @return the same string, just with capital letters at the start of each word
      */
     public static String capitalizeWords(String input) {
         String[] words = input.split(" ");
@@ -94,11 +91,11 @@ public class UserInputUtils {
     }
 
     /**
-     * Formats a list of enums into a user-friendly string (capitalized and separated by commas).
+     * Takes a list of enums and turns them into a nice, comma-separated string.
      *
-     * @param list the list of enum values
+     * @param list the enum list
      * @param <T>  the enum type
-     * @return a formatted string of capitalized enum names
+     * @return a user-friendly string of the values
      */
     public static <T extends Enum<T>> String formatEnumList(List<T> list) {
         return list.stream()
@@ -107,11 +104,11 @@ public class UserInputUtils {
     }
 
     /**
-     * Formats a single enum value into a user-friendly capitalized string.
+     * Formats a single enum to look nice (capitalized and spaced out).
      *
      * @param e   the enum value
      * @param <T> the enum type
-     * @return a formatted string representation of the enum
+     * @return a cleaner-looking string
      */
     public static <T extends Enum<T>> String formatEnum(T e) {
         return capitalizeWords(e.toString().replace("_", " ").toLowerCase());

@@ -3,18 +3,18 @@ package builders;
 import models.Chip;
 import models.enums.ChipFlavor;
 
-import static utils.UserInputUtils.promptOption;
+import static utils.UserPromptUtils.promptOption;
 
 /**
- * Builder class responsible for constructing {@link Chip} objects
- * through user interaction.
+ * Builds a {@link Chip} by asking the user what they want.
  */
+
 public class ChipBuilder {
 
     /**
-     * Prompts the user to select a chip flavor and returns a new {@link Chip} instance.
+     * Asks the user to pick a chip flavor and makes a new {@link Chip} with it.
      *
-     * @return a Chip object based on the user's selected flavor.
+     * @return a Chip based on what the user picked.
      */
     public Chip build() {
         ChipFlavor flavor = promptOption("Select Chip Flavor:", ChipFlavor.values());

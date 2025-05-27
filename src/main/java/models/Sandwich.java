@@ -12,13 +12,12 @@ import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static utils.UserInputUtils.formatEnum;
-import static utils.UserInputUtils.formatEnumList;
+import static utils.UserPromptUtils.formatEnum;
+import static utils.UserPromptUtils.formatEnumList;
 
 /**
- * Represents a customizable sandwich that can be included in an order.
- * A sandwich has a size, bread type, a list of toppings and extra toppings,
- * and an option for being toasted.
+ * A customizable sandwich you can add to an order.
+ * Has a size, bread, toppings, extras, and you can toast it too.
  */
 @Getter
 public class Sandwich implements MenuItem, Printable {
@@ -30,13 +29,13 @@ public class Sandwich implements MenuItem, Printable {
     private final Boolean isToasted;
 
     /**
-     * Constructs a new {@code Sandwich} with the given configuration.
+     * Builds a new sandwich with all the stuff the user picked.
      *
-     * @param sandwichSize   the size of the sandwich
-     * @param breadType      the bread type used
+     * @param sandwichSize   how big the sandwich is
+     * @param breadType      what kind of bread it's on
      * @param toppings       regular toppings
-     * @param extraToppings  additional toppings
-     * @param isToasted      whether the sandwich is toasted
+     * @param extraToppings  extras the user added
+     * @param isToasted      true if it’s toasted
      */
     public Sandwich(SandwichSize sandwichSize, BreadType breadType, List<Topping> toppings,
                     List<Topping> extraToppings, Boolean isToasted) {
@@ -48,10 +47,10 @@ public class Sandwich implements MenuItem, Printable {
     }
 
     /**
-     * Calculates the price of the sandwich based on size and toppings.
-     * Includes base price and surcharges for meats and cheeses.
+     * Figures out how much the sandwich costs based on size and toppings.
+     * Adds extra charges for meats and cheeses.
      *
-     * @return the total price of the sandwich
+     * @return total sandwich price
      */
     @Override
     public BigDecimal getPrice() {
@@ -81,9 +80,9 @@ public class Sandwich implements MenuItem, Printable {
     }
 
     /**
-     * Prints a formatted summary of the sandwich's properties and total price.
+     * Prints a summary of the sandwich — size, bread, toppings, and price.
      *
-     * @param out the output stream to print to
+     * @param out where to print it
      */
     @Override
     public void printSummary(PrintStream out) {
@@ -97,7 +96,7 @@ public class Sandwich implements MenuItem, Printable {
     }
 
     /**
-     * Returns the cost of one meat topping for the given sandwich size.
+     * Price for a regular meat topping based on sandwich size.
      */
     protected BigDecimal getMeatPrice(SandwichSize size) {
         return switch (size) {
@@ -108,7 +107,7 @@ public class Sandwich implements MenuItem, Printable {
     }
 
     /**
-     * Returns the cost of one extra meat topping for the given sandwich size.
+     * Price for an extra meat topping based on sandwich size.
      */
     protected BigDecimal getExtraMeatPrice(SandwichSize size) {
         return switch (size) {
@@ -119,7 +118,7 @@ public class Sandwich implements MenuItem, Printable {
     }
 
     /**
-     * Returns the cost of one cheese topping for the given sandwich size.
+     * Price for a regular cheese topping based on sandwich size.
      */
     protected BigDecimal getCheesePrice(SandwichSize size) {
         return switch (size) {
@@ -130,7 +129,7 @@ public class Sandwich implements MenuItem, Printable {
     }
 
     /**
-     * Returns the cost of one extra cheese topping for the given sandwich size.
+     * Price for an extra cheese topping based on sandwich size.
      */
     protected BigDecimal getExtraCheesePrice(SandwichSize size) {
         return switch (size) {
@@ -140,3 +139,4 @@ public class Sandwich implements MenuItem, Printable {
         };
     }
 }
+

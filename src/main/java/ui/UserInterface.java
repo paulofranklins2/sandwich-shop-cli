@@ -10,53 +10,51 @@ import persistence.ReceiptManager;
 import java.io.IOException;
 
 import static utils.ConsolePrinter.printHeader;
-import static utils.ConsolePrinter.printLine;
-import static utils.UserInputUtils.*;
+import static utils.UserPromptUtils.*;
 
 /**
- * Manages the console-based user interface for the DELI-cious POS system.
- * Handles user interaction for placing orders, reviewing summaries, and saving receipts.
+ * Handles the command-line interface for the DELI-cious POS system.
+ * Lets users place orders, check receipts, and manage their choices.
  */
 public class UserInterface {
 
     private final Order currentOrder = new Order();
 
     /**
-     * Starts the user interface by showing the home screen.
+     * Kicks things off by showing the main menu.
      */
     public void init() {
         mainMenu();
     }
 
     /**
-     * Displays the main menu and handles user navigation:
-     * - Starts a new order
-     * - Allows receipt retrieval by ID
-     * - Exits the application
+     * Shows the main menu and handles user choices:
+     * - Start a new order
+     * - Look up an old receipt
+     * - Exit the app
      */
     private void mainMenu() {
         while (true) {
-            printHeader("Welcome to DELI-cious POS");
-            printLine("[1] - New Order");
-            printLine("[2] - View Receipt by ID");
-            printLine("[0] - Exit");
+            printHeader("Welcome to Sandwich Shop POS");
+            System.out.println("[1] - New Order");
+            System.out.println("[2] - View Receipt by ID");
+            System.out.println("[0] - Exit");
 
             int option = intPrompt("Choose: ");
             switch (option) {
                 case 1 -> orderScreen();
                 case 2 -> viewReceiptById();
                 case 0 -> {
-                    printLine("Goodbye!");
+                    System.out.println("Goodbye!");
                     return;
                 }
-                default -> printLine("Invalid option.");
+                default -> System.out.println("Invalid option.");
             }
         }
     }
 
     /**
-     * Prompts the user to enter a receipt number and attempts to load the
-     * corresponding receipt file from the disk. Displays the order summary if found.
+     * Asks for a receipt number and tries to load and show it from file.
      */
     private void viewReceiptById() {
         scanner.nextLine();
@@ -65,31 +63,28 @@ public class UserInterface {
         try {
             new ReceiptManager().loadReceiptById(id);
         } catch (IOException e) {
-            printLine("Receipt not found " + e.getMessage());
+            System.out.println("Receipt not found: " + e.getMessage());
         }
     }
 
     /**
-     * Displays the order screen where the user can build and manage an order.
+     * Lets the user build an order step-by-step.
      */
     private void orderScreen() {
         currentOrder.clear();
         while (true) {
             printHeader("Order Screen");
-            printLine("[1] - Add Sandwich");
-            printLine("[2] - Add Signature Sandwich");
-            printLine("[3] - Add Drink");
-            printLine("[4] - Add Chips");
-            printLine("[5] - Checkout");
-            printLine("[0] - Cancel Order");
+            System.out.println("[1] - Add Sandwich");
+            System.out.println("[2] - Add Signature Sandwich");
+            System.out.println("[3] - Add Drink");
+            System.out.println("[4] - Add Chips");
+            System.out.println("[5] - Checkout");
+            System.out.println("[0] - Cancel Order");
 
             int choice = intPrompt("Choose: ");
             switch (choice) {
                 case 1 -> currentOrder.addItem(new SandwichBuilder().build());
-                case 2 -> {
-                    var signature = new SignatureSandwichBuilder().build();
-                    if (signature != null) currentOrder.addItem(signature);
-                }
+                case 2 -> currentOrder.addItem(new SignatureSandwichBuilder().build());
                 case 3 -> currentOrder.addItem(new DrinkBuilder().build());
                 case 4 -> currentOrder.addItem(new ChipBuilder().build());
                 case 5 -> {
@@ -97,22 +92,22 @@ public class UserInterface {
                     return;
                 }
                 case 0 -> {
-                    printLine("Order canceled.");
+                    System.out.println("Order canceled.");
                     return;
                 }
-                default -> printLine("Invalid option.");
+                default -> System.out.println("Invalid option.");
             }
         }
     }
 
     /**
-     * Finalizes the order by displaying a summary and confirming whether to save it as a receipt.
+     * Shows the order summary and lets the user confirm and save it.
      */
     private void checkoutScreen() {
         printHeader("Checkout");
 
         if (currentOrder.isEmpty()) {
-            printLine("No items in the order.");
+            System.out.println("No items in the order.");
             return;
         }
 
@@ -120,20 +115,20 @@ public class UserInterface {
         double total = currentOrder.getPrice().doubleValue();
 
         System.out.printf("Total: $%.2f%n", total);
-        printLine("[1] - Confirm Order");
-        printLine("[0] - Cancel Order");
+        System.out.println("[1] - Confirm Order");
+        System.out.println("[0] - Cancel Order");
 
         int confirm = intPrompt("Choose: ");
         if (confirm == 1) {
             try {
                 String receiptNumber = new ReceiptManager().saveOrderReceipt(currentOrder.getItems(), total);
-                printLine("Order confirmed and saved.");
-                printLine("📄 Your receipt number: " + receiptNumber);
+                System.out.println("Order confirmed and saved.");
+                System.out.println("📄 Your receipt number: " + receiptNumber);
             } catch (IOException e) {
-                printLine("Failed to save receipt: " + e.getMessage());
+                System.out.println("Failed to save receipt: " + e.getMessage());
             }
         } else {
-            printLine("Order canceled.");
+            System.out.println("Order canceled.");
         }
     }
 }

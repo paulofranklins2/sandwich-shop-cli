@@ -8,8 +8,8 @@ import models.enums.Topping;
 import java.util.List;
 
 /**
- * Represents a pre-defined sandwich with a name and default ingredients.
- * Inherits functionality from the base {@link Sandwich} class.
+ * A preset sandwich with a name and default ingredients.
+ * Just a regular {@link Sandwich} with a personality.
  */
 @Getter
 public class SignatureSandwich extends Sandwich {
@@ -17,14 +17,14 @@ public class SignatureSandwich extends Sandwich {
     private final String name;
 
     /**
-     * Constructs a SignatureSandwich with a name and specific sandwich configuration.
+     * Makes a SignatureSandwich with a name and a full setup.
      *
-     * @param name         the name of the signature sandwich (e.g., "BLT", "Philly Cheesesteak")
-     * @param size         the {@link SandwichSize} of the sandwich
-     * @param bread        the {@link BreadType} used
-     * @param toppings     the default toppings included
-     * @param extras       extra toppings to be included
-     * @param isToasted    whether the sandwich is toasted
+     * @param name      the sandwich’s name (like "BLT" or "Philly Cheesesteak")
+     * @param size      the size of the sandwich
+     * @param bread     the bread type
+     * @param toppings  the regular toppings
+     * @param extras    the extras
+     * @param isToasted true if toasted
      */
     public SignatureSandwich(String name, SandwichSize size, BreadType bread,
                              List<Topping> toppings, List<Topping> extras, boolean isToasted) {
@@ -33,9 +33,9 @@ public class SignatureSandwich extends Sandwich {
     }
 
     /**
-     * Prints a summary prefixed with the sandwich name followed by the detailed configuration.
+     * Prints the name of the signature sandwich, then all the details.
      *
-     * @param out the output stream to print to
+     * @param out where to print it
      */
     @Override
     public void printSummary(java.io.PrintStream out) {
@@ -43,3 +43,4 @@ public class SignatureSandwich extends Sandwich {
         super.printSummary(out);
     }
 }
+

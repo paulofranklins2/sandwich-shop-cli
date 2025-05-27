@@ -8,11 +8,11 @@ import models.enums.ChipFlavor;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 
-import static utils.UserInputUtils.capitalizeWords;
+import static utils.UserPromptUtils.capitalizeWords;
 
 /**
- * Represents a bag of chips that can be added to an order.
- * Each chip has a {@link ChipFlavor} and a fixed price.
+ * A bag of chips you can add to an order.
+ * Has a {@link ChipFlavor} and a fixed price.
  */
 public class Chip implements MenuItem, Printable {
 
@@ -20,18 +20,18 @@ public class Chip implements MenuItem, Printable {
     private final ChipFlavor chipFlavor;
 
     /**
-     * Constructs a Chip with the given flavor.
+     * Makes a Chip with the given flavor.
      *
-     * @param flavor the chip flavor selected
+     * @param flavor the chip flavor picked
      */
     public Chip(ChipFlavor flavor) {
         this.chipFlavor = flavor;
     }
 
     /**
-     * Returns the price of the chip item.
+     * Gets the price of the chips.
      *
-     * @return the chip price as a {@link BigDecimal}
+     * @return the price as a {@link BigDecimal}
      */
     @Override
     public BigDecimal getPrice() {
@@ -39,9 +39,9 @@ public class Chip implements MenuItem, Printable {
     }
 
     /**
-     * Prints a formatted summary of the chip, including its flavor and price.
+     * Prints out the chip flavor and price in a nice format.
      *
-     * @param out the output stream to print to
+     * @param out where to print the summary
      */
     @Override
     public void printSummary(PrintStream out) {

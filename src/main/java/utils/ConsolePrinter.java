@@ -1,34 +1,25 @@
 package utils;
 
 /**
- * Utility class to simplify and standardize console output formatting.
- * Provides methods for printing headers, lines, and options in a consistent style.
+ * Handy little helper for printing stuff to the console in a clean way.
+ * Helps keep headers, lines, and options looking consistent.
  */
 public class ConsolePrinter {
 
     /**
-     * Prints a formatted header with surrounding lines.
+     * Prints a bold header with lines around it.
      *
-     * @param title the title text to display as a section header
+     * @param title the title to show at the top of a section
      */
     public static void printHeader(String title) {
-        System.out.println("\n=== " + title + " ===");
+        System.out.println("=============== " + title + " ===============");
     }
 
     /**
-     * Prints a plain message line to the console.
+     * Prints a menu option like [1] - Option Name.
      *
-     * @param message the message to print
-     */
-    public static void printLine(String message) {
-        System.out.println(message);
-    }
-
-    /**
-     * Prints a selectable option formatted with an index and label.
-     *
-     * @param index the numeric value of the option
-     * @param label the description of the option
+     * @param index number for the option
+     * @param label what the option is
      */
     public static void printOption(int index, String label) {
         System.out.printf("[%d] - %s%n", index, label);

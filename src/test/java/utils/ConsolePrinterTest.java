@@ -32,13 +32,6 @@ class ConsolePrinterTest {
     }
 
     @Test
-    void printLine_shouldPrintMessage() {
-        ConsolePrinter.printLine("Hello, World!");
-        String printed = output.toString();
-        assertTrue(printed.contains("Hello, World!"), "Expected message should be printed");
-    }
-
-    @Test
     void printOption_shouldPrintFormattedOption() {
         ConsolePrinter.printOption(1, "Option A");
         String printed = output.toString();

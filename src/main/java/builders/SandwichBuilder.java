@@ -10,21 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static utils.ConsolePrinter.printHeader;
-import static utils.UserInputUtils.intPrompt;
-import static utils.UserInputUtils.promptOption;
+import static utils.UserPromptUtils.intPrompt;
+import static utils.UserPromptUtils.promptOption;
 
 /**
- * Builder class for creating custom {@link Sandwich} objects.
- * Prompts the user to choose a {@link BreadType}, {@link SandwichSize},
- * and interactively select {@link Topping}s and extras.
+ * Builds custom {@link Sandwich}es by asking the user to pick a {@link BreadType},
+ * {@link SandwichSize}, and toppings/extras.
  */
 public class SandwichBuilder {
 
     /**
-     * Builds and returns a fully customized {@link Sandwich} based on user input.
-     * This includes bread type, size, toppings, extra toppings, and toasted option.
+     * Builds and returns a custom {@link Sandwich} based on what the user picks—
+     * bread, size, toppings, extras, and whether it's toasted.
      *
-     * @return a Sandwich instance composed through CLI prompts
+     * @return a Sandwich made from user choices in the CLI
      */
     public Sandwich build() {
         printHeader("Custom Sandwich");

@@ -10,20 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static utils.ConsolePrinter.printHeader;
-import static utils.ConsolePrinter.printLine;
-import static utils.UserInputUtils.intPrompt;
+import static utils.UserPromptUtils.intPrompt;
 
 /**
- * Builder class for constructing a {@link Sandwich} based on predefined {@link SignatureSandwich} presets.
- * Allows users to modify base toppings and extras during the build process.
+ * Builds a {@link Sandwich} using a preset {@link SignatureSandwich}.
+ * Lets the user tweak the toppings and extras if they want.
  */
 public class SignatureSandwichBuilder {
 
     /**
-     * Displays a list of {@link SignatureSandwich} options, allows the user to select one,
-     * and optionally modify the toppings and extras. Returns a new {@link Sandwich} instance.
+     * Shows the list of {@link SignatureSandwich} options, lets the user pick one,
+     * and change the toppings/extras if they want. Returns the final {@link Sandwich}.
      *
-     * @return a customized Sandwich based on a signature preset
+     * @return a custom Sandwich based on a preset
      */
     public Sandwich build() {
         List<SignatureSandwich> options = SignatureSandwiches.getAll();
@@ -35,7 +34,7 @@ public class SignatureSandwichBuilder {
 
         int index = intPrompt("Choose: ");
         if (index < 0 || index >= options.size()) {
-            printLine("Invalid selection.");
+            System.out.println("Invalid selection.");
             return null;
         }
 

@@ -3,76 +3,62 @@ package persistence;
 import interfaces.MenuItem;
 import interfaces.Printable;
 
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * Responsible for persisting order receipts to the filesystem.
- * Generates a uniquely timestamped file containing the full order summary and total.
+ * Handles saving order receipts to files.
+ * Makes a file with a timestamp and the full order details + total.
  */
 public class ReceiptManager {
+    private final String path = "src/main/resources/receipt/";
 
     /**
-     * Saves a formatted receipt for the given list of {@link MenuItem} entries and total amount.
-     * Each item is printed using its {@link Printable} interface if supported.
+     * Saves the order to a file, listing all the items and the total price.
      *
-     * @param orderItems the list of items in the order
-     * @param total      the total amount of the order
-     * @throws IOException if the file cannot be written
+     * @param orderItems list of everything in the order
+     * @param total      the total price for the order
+     * @return the name of the file the receipt was saved to
+     * @throws IOException if something goes wrong while writing the file
      */
     public String saveOrderReceipt(List<MenuItem> orderItems, double total) throws IOException {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
-        String fileName = formattedDateTime(localDateTime, formatter);
-        String PATH = "src/main/resources/receipt/";
+        // Use the current date and time to make the file name unique
+        LocalDateTime now = LocalDateTime.now();
+        String fileName = now.format(DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss"));
 
-        try (PrintWriter printWriter = new PrintWriter(new FileWriter(PATH + fileName))) {
-            printWriter.println("=== Order Receipt ===");
-            printWriter.println("Date: " + localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            printWriter.println();
+        // Write the receipt to the file
+        try (PrintStream printStream = new PrintStream(new FileOutputStream(path + fileName))) {
+            printStream.println("===============  Order Receipt =============== ");
+            printStream.println("Date: " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            printStream.println();
 
             for (MenuItem item : orderItems) {
                 if (item instanceof Printable printable) {
-                    SummaryCapture summary = new SummaryCapture();
-                    printable.printSummary(summary);
-                    printWriter.print(summary.toString());
+                    printable.printSummary(printStream);
                 } else {
-                    printWriter.println("Unprintable item: " + item.getClass().getSimpleName());
+                    printStream.println("Unprintable item: " + item.getClass().getSimpleName());
                 }
             }
 
-            printWriter.println();
-            printWriter.printf("TOTAL: $%.2f%n", total);
+            printStream.println();
+            printStream.printf("TOTAL: $%.2f%n", total);
         }
-        return fileName; // Receipt number
+        return fileName;
     }
 
     /**
-     * Formats the current date and time to generate a filename-friendly timestamp.
+     * Loads and prints a receipt file by its ID.
+     * Looks for the file in 'src/main/resources/receipt/' and prints it to the console.
      *
-     * @param dateTime  the current date and time
-     * @param formatter the formatter used to shape the timestamp
-     * @return a formatted timestamp string
-     */
-    private String formattedDateTime(LocalDateTime dateTime, DateTimeFormatter formatter) {
-        return dateTime.format(formatter);
-    }
-
-    /**
-     * Loads and displays the contents of a receipt file based on the provided receipt ID.
-     * This method reads from the 'src/main/resources/receipt/' directory and prints the
-     * receipt to the console. If the file is not found, an IOException is thrown.
-     *
-     * @param receiptId the filename of the receipt (e.g., "20250523-172201")
-     * @throws IOException if the receipt file cannot be found or read
+     * @param receiptId name of the receipt file (like "20250523-172201")
+     * @throws IOException if the file can't be found or read
      */
     public void loadReceiptById(String receiptId) throws IOException {
-        String PATH = "src/main/resources/receipt/";
-        String fullPath = PATH + receiptId;
+        String fullPath = path + receiptId;
 
         try (var reader = new java.util.Scanner(new java.io.File(fullPath))) {
             System.out.println("=== Receipt: " + receiptId + " ===");
@@ -80,7 +66,7 @@ public class ReceiptManager {
                 System.out.println(reader.nextLine());
             }
         } catch (IOException e) {
-            throw new IOException("Unable to locate receipt with ID: " + receiptId + ". Please ensure the ID is correct and try again.");
+            throw new IOException("Couldn't find the receipt with ID: " + receiptId);
         }
     }
 }

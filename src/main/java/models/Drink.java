@@ -9,12 +9,11 @@ import models.enums.DrinkSize;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 
-import static utils.UserInputUtils.capitalizeWords;
+import static utils.UserPromptUtils.capitalizeWords;
 
 /**
- * Represents a drink item that can be added to an order.
- * A drink has a specific {@link DrinkSize} and {@link DrinkFlavor},
- * and its price is determined by its size.
+ * A drink you can add to an order.
+ * Has a {@link DrinkSize} and {@link DrinkFlavor}, and the price depends on the size.
  */
 @Getter
 public class Drink implements MenuItem, Printable {
@@ -22,10 +21,10 @@ public class Drink implements MenuItem, Printable {
     private final DrinkFlavor drinkFlavor;
 
     /**
-     * Constructs a Drink with the specified size and flavor.
+     * Makes a Drink with the given size and flavor.
      *
-     * @param drinkSize   the selected size of the drink
-     * @param drinkFlavor the selected flavor of the drink
+     * @param drinkSize   the size the user picked
+     * @param drinkFlavor the flavor the user picked
      */
     public Drink(DrinkSize drinkSize, DrinkFlavor drinkFlavor) {
         this.drinkSize = drinkSize;
@@ -33,9 +32,9 @@ public class Drink implements MenuItem, Printable {
     }
 
     /**
-     * Returns the price of the drink based on its {@link DrinkSize}.
+     * Figures out the price based on the drink’s size.
      *
-     * @return the drink price as a {@link BigDecimal}
+     * @return the price as a {@link BigDecimal}
      */
     @Override
     public BigDecimal getPrice() {
@@ -47,9 +46,9 @@ public class Drink implements MenuItem, Printable {
     }
 
     /**
-     * Prints a formatted summary of the drink, including its flavor, size, and price.
+     * Prints out the drink’s size, flavor, and price.
      *
-     * @param print the output stream to print to
+     * @param print where to print the summary
      */
     @Override
     public void printSummary(PrintStream print) {

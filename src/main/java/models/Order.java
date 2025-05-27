@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a customer's order containing a list of {@link MenuItem} objects
- * such as sandwiches, drinks, and chips. Supports pricing and summary printing.
+ * A customer's order made up of {@link MenuItem}s like sandwiches, drinks, and chips.
+ * You can get the total price and print out a summary.
  */
 public class Order implements Printable, MenuItem {
 
@@ -19,41 +19,41 @@ public class Order implements Printable, MenuItem {
     private final List<MenuItem> items;
 
     /**
-     * Constructs an empty order.
+     * Starts a new, empty order.
      */
     public Order() {
         items = new ArrayList<>();
     }
 
     /**
-     * Adds a {@link MenuItem} to the order.
+     * Adds an item to the order.
      *
-     * @param item the item to add
+     * @param item the thing you want to add
      */
     public void addItem(MenuItem item) {
         items.add(item);
     }
 
     /**
-     * Clears all items from the order.
+     * Wipes the order clean — removes everything.
      */
     public void clear() {
         items.clear();
     }
 
     /**
-     * Checks whether the order contains any items.
+     * Checks if the order has anything in it.
      *
-     * @return true if the order is empty; false otherwise
+     * @return true if it’s empty, false if there’s stuff in it
      */
     public boolean isEmpty() {
         return items.isEmpty();
     }
 
     /**
-     * Calculates and returns the total price of all items in the order.
+     * Adds up the price of everything in the order.
      *
-     * @return the total price as a {@link BigDecimal}
+     * @return total cost as a {@link BigDecimal}
      */
     @Override
     public BigDecimal getPrice() {
@@ -63,10 +63,9 @@ public class Order implements Printable, MenuItem {
     }
 
     /**
-     * Prints a formatted summary of the order, including each item's details
-     * and the total cost.
+     * Prints out all the items in the order and shows the total.
      *
-     * @param out the output stream to print to
+     * @param out where to print the summary
      */
     @Override
     public void printSummary(PrintStream out) {

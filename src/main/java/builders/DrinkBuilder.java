@@ -4,19 +4,18 @@ import models.Drink;
 import models.enums.DrinkFlavor;
 import models.enums.DrinkSize;
 
-import static utils.UserInputUtils.promptOption;
+import static utils.UserPromptUtils.promptOption;
 
 /**
- * Builder class responsible for creating {@link Drink} objects
- * by prompting the user to select a drink size and flavor.
+ * Builds a {@link Drink} by asking the user to pick a size and flavor.
  */
 public class DrinkBuilder {
 
     /**
-     * Prompts the user to choose a {@link DrinkSize} and {@link DrinkFlavor},
-     * then constructs and returns a {@link Drink} object.
+     * Asks the user to pick a {@link DrinkSize} and {@link DrinkFlavor},
+     * then puts together and returns a {@link Drink}.
      *
-     * @return a Drink instance based on user input
+     * @return a Drink based on what the user chose
      */
     public Drink build() {
         DrinkSize size = promptOption("Select Drink Size:", DrinkSize.values());

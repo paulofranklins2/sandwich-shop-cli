@@ -3,8 +3,8 @@ package app;
 import ui.UserInterface;
 
 /**
- * Entry point for the sandwich-shop-cli POS application.
- * Initializes and launches the user interface.
+ * This is where the sandwich shop app starts.
+ * Sets things up and kicks off the user interface.
  */
 public class Main {
     public static void main(String[] args) {

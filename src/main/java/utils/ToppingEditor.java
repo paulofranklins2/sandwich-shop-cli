@@ -5,24 +5,23 @@ import models.enums.ToppingType;
 
 import java.util.List;
 
-import static utils.ConsolePrinter.printLine;
-import static utils.UserInputUtils.*;
+import static utils.UserPromptUtils.*;
 
 /**
- * Utility class for editing sandwich toppings through a CLI interface.
- * Allows users to remove or add toppings and designate extra toppings.
+ * Helps the user tweak sandwich toppings in the CLI.
+ * They can add, remove, or mark toppings as extras.
  */
 public class ToppingEditor {
 
     /**
-     * Allows the user to remove toppings from the given list interactively.
+     * Lets the user remove toppings from a list one by one.
      *
-     * @param toppings the list of current toppings
+     * @param toppings the current list of toppings
      */
     public static void removeToppings(List<Topping> toppings) {
         if (toppings.isEmpty()) return;
 
-        printLine("Current Toppings: " + formatEnumList(toppings));
+        System.out.println("Current Toppings: " + formatEnumList(toppings));
         if (intPrompt("Would you like to remove any toppings? (1 = yes, 0 = no): ") != 1) return;
 
         boolean removing = true;
@@ -41,11 +40,10 @@ public class ToppingEditor {
     }
 
     /**
-     * Allows the user to add toppings interactively.
-     * Toppings can optionally be marked as "extra" and added to the extras list.
+     * Lets the user add new toppings. They can also choose to make them "extras".
      *
-     * @param toppings the list of base toppings
-     * @param extras   the list of extra toppings
+     * @param toppings the base toppings list
+     * @param extras   the list for any extra toppings
      */
     public static void addToppings(List<Topping> toppings, List<Topping> extras) {
         boolean adding = intPrompt("Would you like to add any toppings? (1 = yes, 0 = no): ") == 1;

@@ -3,16 +3,16 @@ package interfaces;
 import java.math.BigDecimal;
 
 /**
- * Represents an item that has a price and can be included in an order.
- * Implementing classes must define how the price is calculated.
+ * Something you can add to an order that has a price.
+ * Anything that uses this has to say how much it costs.
  */
 @FunctionalInterface
 public interface MenuItem {
 
     /**
-     * Returns the price of the item.
+     * Tells you how much the item costs.
      *
-     * @return the item's cost as a {@link BigDecimal}
+     * @return the price as a {@link BigDecimal}
      */
     BigDecimal getPrice();
 }

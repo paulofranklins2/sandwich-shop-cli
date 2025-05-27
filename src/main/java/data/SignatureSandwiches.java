@@ -8,16 +8,16 @@ import models.enums.Topping;
 import java.util.List;
 
 /**
- * Provides a static list of predefined {@link SignatureSandwich} presets
- * with curated ingredients, bread types, and sizes.
+ * Holds a static list of ready-to-go {@link SignatureSandwich} presets
+ * with handpicked ingredients, bread, and sizes.
  */
 public class SignatureSandwiches {
 
     /**
-     * Returns a list of default {@link SignatureSandwich} options.
-     * Each sandwich includes a name, size, bread type, toppings, and toasting preference.
+     * Gives back a list of default {@link SignatureSandwich}es.
+     * Each one comes with a name, size, bread, toppings, and toast setting.
      *
-     * @return list of SignatureSandwich instances
+     * @return list of SignatureSandwiches
      */
     public static List<SignatureSandwich> getAll() {
         return List.of(
