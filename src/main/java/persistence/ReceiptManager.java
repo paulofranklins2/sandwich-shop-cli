@@ -41,8 +41,6 @@ public class ReceiptManager {
             for (MenuItem item : orderItems) {
                 if (item instanceof Printable printable) {
                     printable.printSummary(printStream);
-                } else {
-                    printStream.println("Unprintable item: " + item.getClass().getSimpleName());
                 }
             }
 
