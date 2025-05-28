@@ -18,7 +18,7 @@ public class ChipBuilder {
      */
     public Chip build() {
         clearScreen();
-        ChipFlavor flavor = promptOption("Select Chip Flavor:", ChipFlavor.values());
+        ChipFlavor flavor = promptOption("Select Chip Flavor", ChipFlavor.values());
         scanner.nextLine();
         promptToContinue();
         return new Chip(flavor);
