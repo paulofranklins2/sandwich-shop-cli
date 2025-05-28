@@ -18,7 +18,7 @@ import static utils.UserPromptUtils.*;
  */
 public class UserInterface {
 
-    private Order currentOrder = new Order();
+    private final Order currentOrder = new Order();
 
     /**
      * Kicks things off by showing the main menu.
@@ -138,9 +138,9 @@ public class UserInterface {
             }
         } else {
             System.out.println("Order canceled.");
-            currentOrder = new Order();
             scanner.nextLine();
             promptToContinue();
+            mainMenu();
         }
     }
 }
