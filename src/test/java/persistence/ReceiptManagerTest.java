@@ -6,6 +6,7 @@ import models.enums.DrinkFlavor;
 import models.enums.DrinkSize;
 import org.junit.jupiter.api.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,7 +25,7 @@ class ReceiptManagerTest {
     @BeforeEach
     void setUp() {
         receiptManager = new ReceiptManager();
-        new File(RECEIPT_DIR).mkdirs(); // Ensure receipt directory exists
+        new File(RECEIPT_DIR); // Ensure the receipt directory exists
     }
 
     @Test
@@ -43,7 +44,7 @@ class ReceiptManagerTest {
         assertTrue(content.contains("Drink"), "Receipt should mention Drink");
         assertTrue(content.contains("TOTAL: $3.00"), "Receipt should show total price correctly");
 
-        // Clean up (optional)
+        // Clean up
         receiptFile.delete();
     }
 
@@ -53,11 +54,9 @@ class ReceiptManagerTest {
         // Prepare a receipt file to load
         String receiptId = "test-receipt.txt";
         File testReceipt = new File(RECEIPT_DIR + receiptId);
-        Files.writeString(testReceipt.toPath(), "=== Order Receipt ===\nMock Content\nTOTAL: $5.00");
+        Files.writeString(testReceipt.toPath(), "=== Order Receipt ===\nMock Content\nTOTAL: $5.00\n");
 
-        // No assertion here since method prints to console
         assertDoesNotThrow(() -> receiptManager.loadReceiptById(receiptId));
-
         // Clean up
         testReceipt.delete();
     }
@@ -68,7 +67,6 @@ class ReceiptManagerTest {
         Exception exception = assertThrows(IOException.class, () -> {
             receiptManager.loadReceiptById(missingReceiptId);
         });
-
-        assertTrue(exception.getMessage().contains("Unable to locate receipt with ID"));
+        assertTrue(exception.getMessage().contains("Couldn't find the receipt with ID: " + missingReceiptId));
     }
 }

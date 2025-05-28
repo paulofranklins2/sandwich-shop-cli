@@ -67,11 +67,8 @@ public class ReceiptManager {
             while (reader.hasNextLine()) {
                 System.out.println(reader.nextLine());
             }
-            promptToContinue();
         } catch (IOException e) {
-            System.out.println("Couldn't find the receipt with ID: " + receiptId);
-            promptToContinue();
-//            throw new IOException("Couldn't find the receipt with ID: " + receiptId);
+            throw new IOException("Couldn't find the receipt with ID: " + receiptId);
         }
     }
 }
