@@ -18,11 +18,8 @@ public class DrinkBuilder {
      * @return a Drink based on what the user chose
      */
     public Drink build() {
-        clearScreen();
         DrinkSize size = promptOption("Select Drink Size", DrinkSize.values());
         DrinkFlavor flavor = promptOption("Select Drink Flavor:", DrinkFlavor.values());
-        scanner.nextLine();
-        promptToContinue();
         return new Drink(size, flavor);
     }
 }

@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static utils.UserPromptUtils.*;
-
 /**
  * Handles saving order receipts to files.
  * Makes a file with a timestamp and the full order details + total.
@@ -38,6 +36,8 @@ public class ReceiptManager {
             printStream.println("Date: " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             printStream.println();
 
+//            ugly lambda way
+//            orderItems.stream().filter(item -> item instanceof Printable).map(item -> (Printable) item).forEach(printable -> printable.printSummary(printStream));
             for (MenuItem item : orderItems) {
                 if (item instanceof Printable printable) {
                     printable.printSummary(printStream);

@@ -88,10 +88,30 @@ public class UserInterface {
 
             int choice = intPrompt("Choose: ");
             switch (choice) {
-                case 1 -> currentOrder.addItem(new SandwichBuilder().build());
-                case 2 -> currentOrder.addItem(new SignatureSandwichBuilder().build());
-                case 3 -> currentOrder.addItem(new DrinkBuilder().build());
-                case 4 -> currentOrder.addItem(new ChipBuilder().build());
+                case 1 -> {
+                    clearScreen();
+                    currentOrder.addItem(new SandwichBuilder().build());
+                    scanner.nextLine();
+                    promptToContinue();
+                }
+                case 2 -> {
+                    clearScreen();
+                    currentOrder.addItem(new SignatureSandwichBuilder().build());
+                    scanner.nextLine();
+                    promptToContinue();
+                }
+                case 3 -> {
+                    clearScreen();
+                    currentOrder.addItem(new DrinkBuilder().build());
+                    scanner.nextLine();           // Handles newline after enum selection
+                    promptToContinue();           // Gives the user a pause before returning to the menu
+                }
+                case 4 -> {
+                    clearScreen();
+                    currentOrder.addItem(new ChipBuilder().build());
+                    scanner.nextLine();           // Handles newline after enum selection
+                    promptToContinue();           // Gives the user a pause before returning to the menu
+                }
                 case 5 -> checkoutScreen();
                 case 0 -> {
                     System.out.println("Order canceled.");

@@ -25,7 +25,6 @@ public class SignatureSandwichBuilder {
      * @return a custom Sandwich based on a preset
      */
     public Sandwich build() {
-        clearScreen();
         List<SignatureSandwich> options = SignatureSandwiches.getAll();
 
         printHeader("Signature Sandwiches");
@@ -47,8 +46,6 @@ public class SignatureSandwichBuilder {
         ToppingEditor.removeToppings(toppings);
         ToppingEditor.addToppings(toppings, extras);
 
-        scanner.nextLine();
-        promptToContinue();
         return new SignatureSandwich(base.getName(), base.getSandwichSize(), base.getBreadType(), toppings, extras, base.getIsToasted());
     }
 }

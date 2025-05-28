@@ -17,10 +17,7 @@ public class ChipBuilder {
      * @return a Chip based on what the user picked.
      */
     public Chip build() {
-        clearScreen();
         ChipFlavor flavor = promptOption("Select Chip Flavor", ChipFlavor.values());
-        scanner.nextLine();
-        promptToContinue();
         return new Chip(flavor);
     }
 }
