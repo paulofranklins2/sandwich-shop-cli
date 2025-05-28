@@ -1,4 +1,4 @@
-# ✅ DELI-cious POS — Project Task Tracker
+# ✅ sandwich-shop-cli — Project Task Tracker
 
 ## ✅ Completed
 
@@ -56,11 +56,11 @@
 
 ## 🚧 Testing & Polish
 
-- [ ] Add JUnit tests:
-  - [ ] `getPrice()` methods (sandwich, drink, chips)
-  - [ ] `ReceiptManager`
-  - [ ] `Order`
-- [ ] Add CLI usability edge cases
+- [x] Add JUnit tests:
+  - [x] `getPrice()` methods (sandwich, drink, chips)
+  - [x] `ReceiptManager`
+  - [x] `Order`
+- [x] Add CLI usability edge cases
 - [ ] Final code cleanup and consistent Javadoc
 
 ---
@@ -70,7 +70,6 @@
 - [x] Add Signature Sandwiches
 - [x] Allow topping modifications (add/remove on any sub)
 - [x] Enable receipt lookup by receipt number
-- [ ] Add combo deals, discounts, nutrition facts
 
 ---
 
