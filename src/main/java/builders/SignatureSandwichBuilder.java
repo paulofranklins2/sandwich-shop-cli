@@ -49,6 +49,6 @@ public class SignatureSandwichBuilder {
 
         scanner.nextLine();
         promptToContinue();
-        return new Sandwich(base.getSandwichSize(), base.getBreadType(), toppings, extras, base.getIsToasted());
+        return new SignatureSandwich(base.getName(), base.getSandwichSize(), base.getBreadType(), toppings, extras, base.getIsToasted());
     }
 }
