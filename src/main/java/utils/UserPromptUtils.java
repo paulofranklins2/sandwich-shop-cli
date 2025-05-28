@@ -56,18 +56,24 @@ public class UserPromptUtils {
      * @return the option they picked
      */
     public static <T> T promptOption(String title, T[] options) {
+        // Show the title above the list
         System.out.println("\n" + title);
+
         for (int i = 0; i < options.length; i++) {
+            // Format the option nicely for display
             String label = capitalizeWords(options[i].toString().replace("_", " ").toLowerCase());
+            // Print each option with a number
             System.out.printf("[%d] - %s%n", i, label);
         }
 
+        // Ask until the user enters a valid number
         while (true) {
             int input = intPrompt("Choose: ");
             if (input >= 0 && input < options.length) {
-                return options[input];
+                return options[input]; // Return the selected option
             }
-            System.out.println("Invalid option. Pick a number between 0 and " + (options.length - 1) + ".");
+            // If the input is not valid, show a helpful message
+            System.out.println("Invalid option. Please pick a number between 0 and " + (options.length - 1) + ".");
         }
     }
 
@@ -127,7 +133,7 @@ public class UserPromptUtils {
     /**
      * Pauses until the user hits Enter, then "clears" the console.
      */
-    public static void promptToContinue(){
+    public static void promptToContinue() {
         System.out.print("Press Enter to continue... ");
         scanner.nextLine();
         clearScreen();
