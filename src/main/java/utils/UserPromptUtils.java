@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import static utils.ConsolePrinter.printHeader;
+
 /**
  * Handy helper for getting user input and making enums look nice in the CLI.
  */
@@ -57,7 +59,7 @@ public class UserPromptUtils {
      */
     public static <T> T promptOption(String title, T[] options) {
         // Show the title above the list
-        System.out.println("\n" + title);
+        printHeader(title);
 
         for (int i = 0; i < options.length; i++) {
             // Format the option nicely for display
