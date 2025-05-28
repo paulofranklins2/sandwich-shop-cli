@@ -18,7 +18,7 @@ import static utils.UserPromptUtils.*;
  */
 public class UserInterface {
 
-    private final Order currentOrder = new Order();
+    private Order currentOrder = new Order();
 
     /**
      * Kicks things off by showing the main menu.
@@ -66,6 +66,8 @@ public class UserInterface {
             new ReceiptManager().loadReceiptById(id);
         } catch (IOException e) {
             System.out.println("Receipt not found: " + e.getMessage());
+        } finally {
+            promptToContinue();
         }
     }
 
@@ -127,13 +129,16 @@ public class UserInterface {
                 String receiptNumber = new ReceiptManager().saveOrderReceipt(currentOrder.getItems(), total);
                 System.out.println("Order confirmed and saved.");
                 System.out.println("📄 Your receipt number: " + receiptNumber);
-                scanner.nextLine();
-                promptToContinue();
+                mainMenu();
             } catch (IOException e) {
                 System.out.println("Failed to save receipt: " + e.getMessage());
+            } finally {
+                scanner.nextLine();
+                promptToContinue();
             }
         } else {
             System.out.println("Order canceled.");
+            currentOrder = new Order();
             scanner.nextLine();
             promptToContinue();
         }
