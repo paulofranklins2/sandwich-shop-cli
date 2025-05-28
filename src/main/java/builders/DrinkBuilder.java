@@ -19,7 +19,7 @@ public class DrinkBuilder {
      */
     public Drink build() {
         clearScreen();
-        DrinkSize size = promptOption("Select Drink Size:", DrinkSize.values());
+        DrinkSize size = promptOption("Select Drink Size", DrinkSize.values());
         DrinkFlavor flavor = promptOption("Select Drink Flavor:", DrinkFlavor.values());
         scanner.nextLine();
         promptToContinue();
