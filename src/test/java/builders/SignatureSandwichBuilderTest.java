@@ -4,6 +4,8 @@ import models.Sandwich;
 import models.enums.BreadType;
 import models.enums.SandwichSize;
 import models.enums.Topping;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -14,36 +16,33 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SignatureSandwichBuilderTest {
 
+    private InputStream originalIn;
+
+    @BeforeEach
+    void setUp() {
+        originalIn = System.in;
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.setIn(originalIn);
+    }
+
     @Test
     void build_createsSandwichFromSignaturePresetWithoutModification() {
-        // Simulate the following input:
-        // 0 - Choose first signature sandwich (BLT)
-        // 0 - Would you like to remove any toppings? No
-        // 0 - Would you like to add any toppings? No
-        String simulatedInput = String.join("\n", List.of(
-                "0",  // Choose BLT
-                "0",  // No topping removal
-                "0"   // No topping addition
-        ));
+        String simulatedInput = String.join("\n", List.of("0", "0", "0"));
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-        InputStream originalIn = System.in;
-        try {
-            System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        SignatureSandwichBuilder builder = new SignatureSandwichBuilder();
+        Sandwich sandwich = builder.build();
 
-            SignatureSandwichBuilder builder = new SignatureSandwichBuilder();
-            Sandwich sandwich = builder.build();
-
-            assertNotNull(sandwich);
-            assertEquals(SandwichSize.EIGHT_INCH, sandwich.getSandwichSize());
-            assertEquals(BreadType.WHITE, sandwich.getBreadType());
-            assertTrue(sandwich.getToppings().containsAll(List.of(
-                    Topping.BACON, Topping.LETTUCE, Topping.TOMATOES
-            )));
-            assertTrue(sandwich.getExtraToppings().isEmpty());
-            assertTrue(sandwich.getIsToasted());
-
-        } finally {
-            System.setIn(originalIn); // Restore System.in
-        }
+        assertNotNull(sandwich);
+        assertEquals(SandwichSize.EIGHT_INCH, sandwich.getSandwichSize());
+        assertEquals(BreadType.WHITE, sandwich.getBreadType());
+        assertTrue(sandwich.getToppings().containsAll(List.of(
+                Topping.BACON, Topping.LETTUCE, Topping.TOMATOES
+        )));
+        assertTrue(sandwich.getExtraToppings().isEmpty());
+        assertTrue(sandwich.getIsToasted());
     }
 }

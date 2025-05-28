@@ -4,6 +4,8 @@ import models.Sandwich;
 import models.enums.BreadType;
 import models.enums.SandwichSize;
 import models.enums.Topping;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -14,37 +16,43 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SandwichBuilderTest {
 
+    private InputStream originalIn;
+
+    @BeforeEach
+    void setUp() {
+        originalIn = System.in;
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.setIn(originalIn);
+    }
+
     @Test
     void build_createsValidSandwichFromSimulatedUserInput() {
-        // Simulate user input
-        // Indexes may vary depending on enum order
         String simulatedInput = String.join("\n", List.of(
-                "0", // BreadType.WHITE
-                "0", // SandwichSize.FOUR_INCH
-                "1", // Add toppings? Yes
-                "0", // ToppingType.MEAT
-                "5", // Select BACON (verify correct index!)
-                "0", // Add extra? No
-                "0", // Add more toppings? No
-                "1"  // Toast sandwich? Yes
+                "0",  // Choose bread: White
+                "0",  // Choose size: 4"
+                "1",  // Add toppings: Yes
+                "0",  // Topping category: Meat
+                "5",  // Topping: Bacon
+                "0",  // Add extra? No
+                "0",  // Add more toppings? No
+                "0",  // Remove toppings? No
+                "1"   // Toast? Yes
         ));
 
-        InputStream originalIn = System.in;
-        try {
-            System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-            SandwichBuilder builder = new SandwichBuilder();
-            Sandwich sandwich = builder.build();
+        SandwichBuilder builder = new SandwichBuilder();
+        System.out.println(builder);
+        Sandwich sandwich = builder.build();
 
-            assertNotNull(sandwich);
-            assertEquals(BreadType.WHITE, sandwich.getBreadType());
-            assertEquals(SandwichSize.FOUR_INCH, sandwich.getSandwichSize());
-            assertTrue(sandwich.getToppings().contains(Topping.BACON));
-            assertTrue(sandwich.getExtraToppings().isEmpty());
-            assertTrue(sandwich.getIsToasted());
-
-        } finally {
-            System.setIn(originalIn); // Always restore System.in
-        }
+        assertNotNull(sandwich);
+        assertEquals(BreadType.WHITE, sandwich.getBreadType());
+        assertEquals(SandwichSize.FOUR_INCH, sandwich.getSandwichSize());
+        assertTrue(sandwich.getToppings().contains(Topping.BACON));
+        assertTrue(sandwich.getExtraToppings().isEmpty());
+        assertTrue(sandwich.getIsToasted());
     }
 }

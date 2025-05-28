@@ -3,36 +3,40 @@ package builders;
 import models.Drink;
 import models.enums.DrinkFlavor;
 import models.enums.DrinkSize;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DrinkBuilderTest {
 
+    private InputStream originalIn;
+
+    @BeforeEach
+    void setUp() {
+        originalIn = System.in;
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.setIn(originalIn);
+    }
+
     @Test
     void build_returnsCorrectDrinkBasedOnUserInput() {
-        // Backup original System.in
-        InputStream originalIn = System.in;
+        String simulatedInput = String.join("\n", List.of("0", "0"));
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
-        try {
-            // Simulate choosing SMALL (index 0) and COCA_COLA (index 0)
-            String simulatedInput = "0\n0\n";
-            ByteArrayInputStream input = new ByteArrayInputStream(simulatedInput.getBytes());
-            System.setIn(input);
+        DrinkBuilder builder = new DrinkBuilder();
+        Drink drink = builder.build();
 
-            DrinkBuilder builder = new DrinkBuilder();
-            Drink drink = builder.build();
-
-            assertNotNull(drink);
-            assertEquals(DrinkSize.SMALL, drink.getDrinkSize());
-            assertEquals(DrinkFlavor.COCA_COLA, drink.getDrinkFlavor());
-
-        } finally {
-            // Always restore System.in
-            System.setIn(originalIn);
-        }
+        assertNotNull(drink);
+        assertEquals(DrinkSize.SMALL, drink.getDrinkSize());
+        assertEquals(DrinkFlavor.COCA_COLA, drink.getDrinkFlavor());
     }
 }
