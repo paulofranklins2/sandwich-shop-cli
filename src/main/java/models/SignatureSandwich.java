@@ -5,6 +5,7 @@ import models.enums.BreadType;
 import models.enums.SandwichSize;
 import models.enums.Topping;
 
+import java.io.PrintStream;
 import java.util.List;
 
 /**
@@ -38,7 +39,7 @@ public class SignatureSandwich extends Sandwich {
      * @param out where to print it
      */
     @Override
-    public void printSummary(java.io.PrintStream out) {
+    public void printSummary(PrintStream out) {
         out.println("Signature Sandwich: " + name);
         super.printSummary(out);
     }
