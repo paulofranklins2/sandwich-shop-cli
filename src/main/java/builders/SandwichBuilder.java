@@ -26,10 +26,10 @@ public class SandwichBuilder {
      */
     public Sandwich build() {
         clearScreen();
-        printHeader("Custom Sandwich");
+//        printHeader("Custom Sandwich");
 
-        BreadType breadType = promptOption("Choose bread:", BreadType.values());
-        SandwichSize sandwichSize = promptOption("Choose size:", SandwichSize.values());
+        BreadType breadType = promptOption("Choose bread", BreadType.values());
+        SandwichSize sandwichSize = promptOption("Choose size", SandwichSize.values());
 
         List<Topping> toppings = new ArrayList<>();
         List<Topping> extras = new ArrayList<>();
