@@ -9,7 +9,7 @@ import static utils.ConsolePrinter.*;
  * Handy helper for getting user input and making enums look nice in the CLI.
  */
 public class UserPromptUtils {
-    public static final Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner = new Scanner(System.in);
 
     /**
      * Asks the user for a number and keeps trying until they get it right.
@@ -72,7 +72,7 @@ public class UserPromptUtils {
             if (input >= 0 && input < options.length) {
                 return options[input]; // Return the selected option
             }
-            // If the input is not valid, show a helpful message
+            // If the input is not valid
             System.out.println("Invalid option. Please pick a number between 0 and " + (options.length - 1) + ".");
         }
     }
@@ -84,5 +84,11 @@ public class UserPromptUtils {
         System.out.print("Press Enter to continue... ");
         scanner.nextLine();
         clearScreen();
+    }
+
+    public static void resetScanner() {
+        scanner.close();
+        // Create a new scanner based on the current System.in
+        scanner = new Scanner(System.in);
     }
 }

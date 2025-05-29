@@ -4,34 +4,21 @@ import models.Sandwich;
 import models.enums.BreadType;
 import models.enums.SandwichSize;
 import models.enums.Topping;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utils.UserPromptUtils;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SignatureSandwichBuilderTest {
 
-    private InputStream originalIn;
-
-    @BeforeEach
-    void setUp() {
-        originalIn = System.in;
-    }
-
-    @AfterEach
-    void tearDown() {
-        System.setIn(originalIn);
-    }
-
     @Test
     void build_createsSandwichFromSignaturePresetWithoutModification() {
         String simulatedInput = String.join("\n", List.of("0", "0", "0"));
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+        UserPromptUtils.resetScanner();
 
         SignatureSandwichBuilder builder = new SignatureSandwichBuilder();
         Sandwich sandwich = builder.build();

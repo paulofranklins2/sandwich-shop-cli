@@ -3,7 +3,6 @@ package models;
 import models.enums.BreadType;
 import models.enums.SandwichSize;
 import models.enums.Topping;
-import models.enums.ToppingType;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -11,7 +10,8 @@ import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit tests for the {@link Sandwich} class.

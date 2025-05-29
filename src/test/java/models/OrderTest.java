@@ -1,11 +1,6 @@
 package models;
 
-import models.enums.BreadType;
-import models.enums.ChipFlavor;
-import models.enums.DrinkFlavor;
-import models.enums.DrinkSize;
-import models.enums.SandwichSize;
-import models.enums.Topping;
+import models.enums.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
