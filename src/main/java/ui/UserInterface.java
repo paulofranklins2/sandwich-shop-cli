@@ -9,8 +9,7 @@ import persistence.ReceiptManager;
 
 import java.io.IOException;
 
-import static utils.ConsolePrinter.clearScreen;
-import static utils.ConsolePrinter.printHeader;
+import static utils.ConsolePrinter.*;
 import static utils.UserPromptUtils.*;
 
 /**
@@ -20,27 +19,22 @@ import static utils.UserPromptUtils.*;
 public class UserInterface {
 
     private final Order currentOrder = new Order();
+    private boolean running = true;
 
     /**
-     * Kicks things off by showing the main menu.
+     * Starts the application by showing the main menu.
      */
     public void init() {
         mainMenu();
     }
 
     /**
-     * Shows the main menu and handles user choices:
-     * - Start a new order
-     * - Look up an old receipt
-     * - Exit the app
+     * Shows the main menu and handles user choices.
      */
     private void mainMenu() {
-        while (true) {
+        while (running) {
             clearScreen();
-            printHeader("Welcome to Sandwich Shop POS");
-            System.out.println("[1] - New Order");
-            System.out.println("[2] - View Receipt by ID");
-            System.out.println("[0] - Exit");
+            printMainMenu();
 
             int option = intPrompt("Choose: ");
             switch (option) {
@@ -48,7 +42,7 @@ public class UserInterface {
                 case 2 -> viewReceiptById();
                 case 0 -> {
                     System.out.println("Goodbye!");
-                    return;
+                    running = false;
                 }
                 default -> System.out.println("Invalid option.");
             }
@@ -56,10 +50,10 @@ public class UserInterface {
     }
 
     /**
-     * Asks for a receipt number and tries to load and show it from a file.
+     * Lets the user look up a receipt by ID.
      */
     public void viewReceiptById() {
-        scanner.nextLine();
+        scanner.nextLine(); // Clear extra character
         clearScreen();
         printHeader("Retrieve Receipt");
         String id = stringPrompt("Enter your receipt number (e.g., 20250523-172201): ");
@@ -77,45 +71,36 @@ public class UserInterface {
      */
     private void orderScreen() {
         currentOrder.clear();
+
         while (true) {
             clearScreen();
-            printHeader("Order Screen");
-            System.out.println("[1] - Add Sandwich");
-            System.out.println("[2] - Add Signature Sandwich");
-            System.out.println("[3] - Add Drink");
-            System.out.println("[4] - Add Chips");
-            System.out.println("[5] - Checkout");
-            System.out.println("[0] - Cancel Order");
+            printOrderMenu();
 
             int choice = intPrompt("Choose: ");
             switch (choice) {
-                case 1 -> {
-                    clearScreen();
-                    currentOrder.addItem(new SandwichBuilder().build());
-                    scanner.nextLine();
-                    promptToContinue();
+                case 1 -> handleItemAddition( () ->
+                        currentOrder
+                                .addItem(new SandwichBuilder()
+                                        .build()));
+                case 2 -> handleItemAddition(() ->
+                        currentOrder
+                                .addItem(new SignatureSandwichBuilder()
+                                        .build()));
+                case 3 -> handleItemAddition(() ->
+                        currentOrder
+                                .addItem(new DrinkBuilder()
+                                        .build()));
+                case 4 -> handleItemAddition(() ->
+                        currentOrder
+                                .addItem(new ChipBuilder()
+                                        .build()));
+                case 5 -> {
+                    handleItemAddition(this::checkoutScreen);
+                    return;
                 }
-                case 2 -> {
-                    clearScreen();
-                    currentOrder.addItem(new SignatureSandwichBuilder().build());
-                    scanner.nextLine();
-                    promptToContinue();
-                }
-                case 3 -> {
-                    clearScreen();
-                    currentOrder.addItem(new DrinkBuilder().build());
-                    scanner.nextLine();           // Handles newline after enum selection
-                    promptToContinue();           // Gives the user a pause before returning to the menu
-                }
-                case 4 -> {
-                    clearScreen();
-                    currentOrder.addItem(new ChipBuilder().build());
-                    scanner.nextLine();           // Handles newline after enum selection
-                    promptToContinue();           // Gives the user a pause before returning to the menu
-                }
-                case 5 -> checkoutScreen();
                 case 0 -> {
-                    System.out.println("Order canceled.");
+                    handleActionWithPause(() ->
+                            System.out.println("Order canceled."));
                     return;
                 }
                 default -> System.out.println("Invalid option.");
@@ -127,13 +112,10 @@ public class UserInterface {
      * Shows the order summary and lets the user confirm and save it.
      */
     private void checkoutScreen() {
-        clearScreen();
         printHeader("Checkout");
 
         if (currentOrder.isEmpty()) {
             System.out.println("No items in the order.");
-            scanner.nextLine();
-            promptToContinue();
             return;
         }
 
@@ -145,23 +127,40 @@ public class UserInterface {
         System.out.println("[0] - Cancel Order");
 
         int confirm = intPrompt("Choose: ");
+
         if (confirm == 1) {
-            try {
-                String receiptNumber = new ReceiptManager().saveOrderReceipt(currentOrder.getItems(), total);
-                System.out.println("Order confirmed and saved.");
-                System.out.println("📄 Your receipt number: " + receiptNumber);
-                mainMenu();
-            } catch (IOException e) {
-                System.out.println("Failed to save receipt: " + e.getMessage());
-            } finally {
-                scanner.nextLine();
-                promptToContinue();
-            }
+            handleOrderConfirmation(total);
         } else {
             System.out.println("Order canceled.");
-            scanner.nextLine();
-            promptToContinue();
-            mainMenu();
         }
+    }
+
+    /**
+     * Handles the logic for saving the order receipt.
+     */
+    private void handleOrderConfirmation(double total) {
+        try {
+            String receiptNumber = new ReceiptManager().saveOrderReceipt(currentOrder.getItems(), total);
+            System.out.println("Order confirmed and saved.");
+            System.out.println("📄 Your receipt number: " + receiptNumber);
+        } catch (IOException e) {
+            System.out.println("Failed to save receipt: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Handles the standard flow for adding an item.
+     */
+    private void handleItemAddition(Runnable builderAction) {
+        clearScreen();
+        builderAction.run();
+        scanner.nextLine();
+        promptToContinue();
+    }
+
+    private void handleActionWithPause(Runnable action) {
+        action.run();
+        scanner.nextLine();
+        promptToContinue();
     }
 }

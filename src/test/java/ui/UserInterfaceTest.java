@@ -40,6 +40,7 @@ class UserInterfaceTest {
                 "0",  // Drink Flavor: Coca Cola
                 "",   // promptToContinue()
                 "0",  // Cancel Order
+                "",   // Enter to continue
                 "0"   // Exit
         });
 
@@ -78,5 +79,34 @@ class UserInterfaceTest {
         assertTrue(output.contains("Red Bull"), "Expected 'Red Bull' in receipt output");
         assertTrue(output.contains("Takis Fuego"), "Expected 'Takis Fuego' in receipt output");
         assertTrue(output.contains("TOTAL: $41.80"), "Expected correct total in receipt output");
+    }
+
+    @Test
+    void userCanCheckoutSuccessfully() {
+        String input = String.join("\n", new String[]{
+                "1",  // Main Menu: New Order
+                "3",  // Add Drink
+                "1",  // Medium
+                "0",  // Coca Cola
+                "",   // promptToContinue()
+                "5",  // Checkout
+                "1",  // Confirm order
+                "",   // promptToContinue()
+                "0",   // Exit
+                "0"   // Exit
+        });
+
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        UserPromptUtils.resetScanner();
+
+        UserInterface ui = new UserInterface();
+        ui.init();
+
+        String output = testOut.toString();
+
+        assertTrue(output.contains("Checkout"), "Should display Checkout screen");
+        assertTrue(output.contains("Total: $"), "Should display total");
+        assertTrue(output.contains("Order confirmed"), "Order should be confirmed");
+        assertTrue(output.contains("receipt number"), "Receipt number should be shown");
     }
 }

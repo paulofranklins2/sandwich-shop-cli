@@ -11,12 +11,13 @@ import java.util.stream.Collectors;
 public class ConsolePrinter {
 
     /**
-     * Prints a bold header with lines around it.
+     * Prints a header with lines around it.
      *
      * @param title the title to show at the top of a section
      */
     public static void printHeader(String title) {
-        int headerWidth = 50; // Total width for the header line
+        // Total width for the header line
+        int headerWidth = 50;
         int paddingLeft = (headerWidth - title.length()) / 2;
 
         String line = "—".repeat(headerWidth);
@@ -57,7 +58,10 @@ public class ConsolePrinter {
      */
     public static <T extends Enum<T>> String formatEnumList(List<T> list) {
         return list.stream()
-                .map(e -> capitalizeWords(e.toString().replace("_", " ").toLowerCase()))
+                .map(e ->
+                        capitalizeWords(e.toString()
+                                .replace("_", " ")
+                                .toLowerCase()))
                 .collect(Collectors.joining(", "));
     }
 
@@ -78,5 +82,28 @@ public class ConsolePrinter {
             }
         }
         return builder.toString().trim();
+    }
+
+    /**
+     * Prints the main menu options for the user to start a new order,
+     */
+    public static void printMainMenu() {
+        printHeader("Welcome to Sandwich Shop POS");
+        System.out.println("[1] - New Order");
+        System.out.println("[2] - View Receipt by ID");
+        System.out.println("[0] - Exit");
+    }
+
+    /**
+     * Prints the order screen menu options for building an order,
+     */
+    public static void printOrderMenu() {
+        printHeader("Order Screen");
+        System.out.println("[1] - Add Sandwich");
+        System.out.println("[2] - Add Signature Sandwich");
+        System.out.println("[3] - Add Drink");
+        System.out.println("[4] - Add Chips");
+        System.out.println("[5] - Checkout");
+        System.out.println("[0] - Cancel Order");
     }
 }
