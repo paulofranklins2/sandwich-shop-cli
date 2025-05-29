@@ -1,4 +1,4 @@
-# 🥪 sandwich-shop-cli — Custom Sandwich Shop POS (Capstone 2)
+# 🥪 Sandwich Shop Cli — Custom Sandwich Shop POS (Capstone 2)
 
 Welcome to the **Sandwich Shop CLI**, a fully functional Java command-line POS system designed for a custom sandwich
 shop experience. Users can build sandwiches to their liking, add drinks and chips, and receive a fully itemized receipt.
@@ -22,7 +22,7 @@ object-oriented design, modularity, and user-friendly interaction through a text
 - 📄 Receipt generation stored with timestamps
 - 🔍 Lookup past receipts by receipt number
 - 🧩 Modular and maintainable structure (Interfaces, Enums, Builders)
-- 🧪 Ready for JUnit testing and JavaDoc documentation
+- 🧪 JUnit testing and JavaDoc documentation
 ---
 
 ## 🧭 Menu Flow Overview
@@ -79,43 +79,6 @@ TOTAL: $15.75
 # ✅ Project Task Tracker
 
 📋 **[View TODO list](TODO.md)** — Track ongoing tasks and project progress
-
----
-
-## 🚧 Receipt and Persistence
-
-- [x] Create `ReceiptManager` class for file I/O
-- [x] Implement timestamped `.txt` receipts
-- [x] Capture formatted order summaries with `SummaryCapture`
-
----
-
-## 🚧 User Interface
-
-- [x] CLI-based navigation (`UserInterface`)
-- [x] Modular CLI sections: Add sandwich, drink, chip, signature
-- [x] Add order summary & confirmation
-- [x] Extract reusable prompt utilities
-- [x] Clean CLI output with `ConsolePrinter`
-
----
-
-## 🚧 Testing & Polish
-
-- [ ] Add JUnit tests:
-    - [ ] `getPrice()` methods (sandwich, drink, chips)
-    - [ ] `ReceiptManager`
-    - [ ] `Order`
-- [ ] Add CLI usability edge cases
-- [ ] Final code cleanup and consistent Javadoc
-
----
-
-## 🚧 Bonus Features
-
-- [x] Add Signature Sandwiches
-- [x] Allow topping modifications (add/remove on any sub)
-- [ ] Add combo deals, discounts, nutrition facts
 
 ---
 
@@ -353,36 +316,6 @@ You can generate the full JavaDoc with:
 #
 
 ---
-# 🧪 Testing Plans
-
-To ensure reliability and correctness, the following JUnit test cases are planned:
-
-### ✅ Unit Tests
-- **Sandwich Pricing Logic**
-    - Validate price calculation based on size, toppings, extras
-    - Test edge sizes (4", 8", 12") with all combinations
-
-- **Receipt Output Validation**
-    - Capture and verify printed output using `SummaryCapture`
-    - Confirm formatting and price display consistency
-
-- **User Input Utilities**
-    - Test input range validation
-    - Ensure proper error messages for invalid inputs
-    - Simulate promptOption and enum formatting
-
-### 🧱 Boundary & Edge Case Testing
-- Empty orders should return $0.00 total
-- Out-of-bounds selection in any menu should prompt again
-- Empty toppings list should still produce a valid sandwich
-- Canceling during different stages should clear the order safely
-
-### 💡 CLI Usability Testing
-- Test full order creation from start to receipt
-- Validate input navigation (back to home/cancel)
-- Ensure confirmation prompts are clearly labeled
-
----
 
 # 🔧 Built With
 
@@ -413,14 +346,6 @@ Pull requests are always reviewed with appreciation. ❤️
 # 📌 Future Improvements
 
 Here are some fun and practical features planned for future releases:
-
-- 🍽 **Combo Deals & Discounts**
-    - Automatically apply deals for meal combos
-    - Add coupon or promo code support
-
-- 🧮 **Nutrition Info**
-    - Show calorie counts per topping or drink
-    - Include allergens in printed receipts
 
 - 💻 **GUI Version**
     - Build a Swing/JavaFX desktop version
