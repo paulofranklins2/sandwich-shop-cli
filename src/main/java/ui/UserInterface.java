@@ -58,7 +58,7 @@ public class UserInterface {
     /**
      * Asks for a receipt number and tries to load and show it from a file.
      */
-    private void viewReceiptById() {
+    public void viewReceiptById() {
         scanner.nextLine();
         clearScreen();
         printHeader("Retrieve Receipt");

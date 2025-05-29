@@ -24,7 +24,8 @@ public class UserPromptUtils {
                 return scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a number.");
-                scanner.nextLine(); // clear the bad input
+                // skip extra line input
+                scanner.nextLine();
             }
         }
     }
