@@ -1,11 +1,9 @@
 package utils;
 
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
-import static utils.ConsolePrinter.printHeader;
+import static utils.ConsolePrinter.*;
 
 /**
  * Handy helper for getting user input and making enums look nice in the CLI.
@@ -76,59 +74,6 @@ public class UserPromptUtils {
             }
             // If the input is not valid, show a helpful message
             System.out.println("Invalid option. Please pick a number between 0 and " + (options.length - 1) + ".");
-        }
-    }
-
-    /**
-     * Capitalizes each word in a string.
-     *
-     * @param input the string to change
-     * @return the same string, just with capital letters at the start of each word
-     */
-    public static String capitalizeWords(String input) {
-        String[] words = input.split(" ");
-        StringBuilder builder = new StringBuilder();
-        for (String word : words) {
-            if (!word.isEmpty()) {
-                builder.append(Character.toUpperCase(word.charAt(0)))
-                        .append(word.substring(1))
-                        .append(" ");
-            }
-        }
-        return builder.toString().trim();
-    }
-
-    /**
-     * Takes a list of enums and turns them into a nice, comma-separated string.
-     *
-     * @param list the enum list
-     * @param <T>  the enum type
-     * @return a user-friendly string of the values
-     */
-    public static <T extends Enum<T>> String formatEnumList(List<T> list) {
-        return list.stream()
-                .map(e -> capitalizeWords(e.toString().replace("_", " ").toLowerCase()))
-                .collect(Collectors.joining(", "));
-    }
-
-    /**
-     * Formats a single enum to look nice (capitalized and spaced out).
-     *
-     * @param e   the enum value
-     * @param <T> the enum type
-     * @return a cleaner-looking string
-     */
-    public static <T extends Enum<T>> String formatEnum(T e) {
-        return capitalizeWords(e.toString().replace("_", " ").toLowerCase());
-    }
-
-    /**
-     * Prints a bunch of empty lines to simulate clearing the console.
-     * It doesn’t clear the screen but gives a similar effect.
-     */
-    public static void clearScreen() {
-        for (int i = 0; i < 50; i++) {
-            System.out.println();
         }
     }
 

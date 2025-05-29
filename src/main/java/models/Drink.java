@@ -9,7 +9,7 @@ import models.enums.DrinkSize;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 
-import static utils.UserPromptUtils.capitalizeWords;
+import static utils.ConsolePrinter.capitalizeWords;
 
 /**
  * A drink you can add to an order.

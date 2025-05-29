@@ -5,6 +5,8 @@ import models.enums.ToppingType;
 
 import java.util.List;
 
+import static utils.ConsolePrinter.formatEnum;
+import static utils.ConsolePrinter.formatEnumList;
 import static utils.UserPromptUtils.*;
 
 /**

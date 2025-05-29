@@ -9,6 +9,7 @@ import persistence.ReceiptManager;
 
 import java.io.IOException;
 
+import static utils.ConsolePrinter.clearScreen;
 import static utils.ConsolePrinter.printHeader;
 import static utils.UserPromptUtils.*;
 

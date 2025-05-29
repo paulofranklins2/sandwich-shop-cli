@@ -8,7 +8,7 @@ import models.enums.ChipFlavor;
 import java.io.PrintStream;
 import java.math.BigDecimal;
 
-import static utils.UserPromptUtils.capitalizeWords;
+import static utils.ConsolePrinter.capitalizeWords;
 
 /**
  * A bag of chips you can add to an order.

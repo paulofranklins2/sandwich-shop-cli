@@ -1,8 +1,12 @@
 package utils;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Handy little helper for printing stuff to the console in a clean way.
- * Helps keep headers, lines, and options looking consistent.
+ * Focuses on formatting output like headers, spacing, and enum labels
+ * to keep things looking consistent and user-friendly.
  */
 public class ConsolePrinter {
 
@@ -21,5 +25,58 @@ public class ConsolePrinter {
         System.out.println(line);
         System.out.println(centeredTitle);
         System.out.println(line);
+    }
+
+    /**
+     * Prints a bunch of empty lines to simulate clearing the console.
+     * It doesn’t clear the screen but gives a similar effect.
+     */
+    public static void clearScreen() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+    }
+
+    /**
+     * Formats a single enum to look nice (capitalized and spaced out).
+     *
+     * @param e   the enum value
+     * @param <T> the enum type
+     * @return a cleaner-looking string
+     */
+    public static <T extends Enum<T>> String formatEnum(T e) {
+        return capitalizeWords(e.toString().replace("_", " ").toLowerCase());
+    }
+
+    /**
+     * Takes a list of enums and turns them into a nice, comma-separated string.
+     *
+     * @param list the enum list
+     * @param <T>  the enum type
+     * @return a user-friendly string of the values
+     */
+    public static <T extends Enum<T>> String formatEnumList(List<T> list) {
+        return list.stream()
+                .map(e -> capitalizeWords(e.toString().replace("_", " ").toLowerCase()))
+                .collect(Collectors.joining(", "));
+    }
+
+    /**
+     * Capitalizes each word in a string.
+     *
+     * @param input the string to change
+     * @return the same string, just with capital letters at the start of each word
+     */
+    public static String capitalizeWords(String input) {
+        String[] words = input.split(" ");
+        StringBuilder builder = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                builder.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1))
+                        .append(" ");
+            }
+        }
+        return builder.toString().trim();
     }
 }

@@ -12,8 +12,8 @@ import java.io.PrintStream;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static utils.UserPromptUtils.formatEnum;
-import static utils.UserPromptUtils.formatEnumList;
+import static utils.ConsolePrinter.formatEnum;
+import static utils.ConsolePrinter.formatEnumList;
 
 /**
  * A customizable sandwich you can add to an order.
