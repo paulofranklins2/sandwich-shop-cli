@@ -1,28 +1,28 @@
-# 🥪 Sandwich Shop Cli — Custom Sandwich Shop POS (Capstone 2)
+# 🥪 Sandwich Shop CLI – Custom Sandwich POS System
 
-Welcome to the **Sandwich Shop CLI**, a fully functional Java command-line POS system designed for a custom sandwich
-shop experience. Users can build sandwiches to their liking, add drinks and chips, and receive a fully itemized receipt.
-🧾
+Welcome to the Sandwich Shop CLI, a fully interactive command-line application built in Java. It’s designed to let users
+create their perfect sandwich, choose a drink and chips, and view a detailed receipt of their order.
 
-This application was developed as part of the **Advanced Java OOP - Capstone 2** project and is a showcase of clean
-object-oriented design, modularity, and user-friendly interaction through a text-based interface.
+This project was created for the Advanced Java OOP Capstone 2 course. It highlights clean object-oriented design,
+modular structure, and a user-friendly experience through a simple text-based interface.
 
 ---
 
 ## ✨ Features
 
-- 🍞 Build-your-own sandwiches (bread, size, toppings, extras)
-- 🔥 Toasting option and customizable toppings
-- 🥪 Choose from a menu of Signature Sandwiches (BLT, Philly, Veggie, etc.)
-- ➕ Modify signature sandwiches (add/remove toppings)
-- 🥤 Add drinks from a curated flavor list and sizes
-- 🍟 Include chips from a variety of classic flavors
-- 💰 Accurate pricing using `BigDecimal`
-- 📋 Order summary and confirmation screen
-- 📄 Receipt generation stored with timestamps
-- 🔍 Lookup past receipts by receipt number
-- 🧩 Modular and maintainable structure (Interfaces, Enums, Builders)
-- 🧪 JUnit testing and JavaDoc documentation
+- Build your own sandwich by selecting the bread, size, toppings, and extras
+- Option to toast your sandwich and fully customize ingredients
+- Choose from a list of Signature Sandwiches like BLT, Philly, or Veggie
+- Modify signature sandwiches by adding or removing toppings
+- Add drinks from a selection of flavors and sizes
+- Pick from a variety of classic chip flavors
+- Accurate pricing handled with `BigDecimal`
+- View a full order summary before confirming
+- Generates a timestamped receipt for every order
+- Look up past receipts using the receipt number
+- Designed with modular, maintainable code (Interfaces, Enums, Builders)
+- Includes unit tests with JUnit and well-documented with JavaDoc
+
 ---
 
 ## 🧭 Menu Flow Overview
@@ -31,8 +31,10 @@ object-oriented design, modularity, and user-friendly interaction through a text
 
 ``` textmate
 [1] - New Order
+[2] - View Receipt by ID
 [0] - Exit
 ```
+
 ---
 
 ### Order Menu
@@ -45,40 +47,42 @@ object-oriented design, modularity, and user-friendly interaction through a text
 [5] - Checkout
 [0] - Cancel Order
 ```
----
 
-### Sandwich Customization
-
-```textmate
-- Select `BreadType`: WHITE, WHEAT, RYE, WRAP, ITALIAN
-- Select `SandwichSize`: 4", 8", 12"
-- Add/remove meats, cheeses, sauces, and regular toppings
-- Add extras (optional)
-- Choose whether to toast
-```
 ---
 
 ## 📄 Sample Receipt
 
 ```textmate
-=== Order Summary ===
-Sandwich:
-Size: 12" inches
-Bread: Wheat
-Toasted: Yes
-Toppings: Steak, Swiss, Lettuce, Tomatoes
-Extra Toppings: Swiss
-Price: $11.75
-Drink: Sprite (Medium) - $2.50
-Chips: Doritos Nacho Cheese - $1.50
+=== Order Receipt ===
+Date: 2025-05-23 16:54:36
 
-TOTAL: $15.75
+Sandwich:
+- Size: 12" inches
+- Bread: Wheat
+- Toasted: Yes
+- Toppings: Salami, Steak, Provolone, Mayo
+- Extra Toppings: Salami, Provolone
+- Price: $19.15
+Sandwich:
+- Size: 12" inches
+- Bread: Italian
+- Toasted: Yes
+- Toppings: Steak, American
+- Extra Toppings: American
+- Price: $14.65
+Drink: Red Bull (Large) - $3.00
+Drink: Fanta (Small) - $2.00
+Chips: Kettle Sea Salt - $1.50
+Chips: Takis Fuego - $1.50
+
+TOTAL: $41.80
 ```
+
 ---
 
 # ✅ Project Task Tracker
 
-📋 **[View TODO list](TODO.md)** — Track ongoing tasks and project progress
+📋 **[View TODO list](TODO.md)** – Stay on top of tasks and keep track of project progress
 
 ---
 
@@ -107,165 +111,165 @@ sandwich-shop-cli/
 ├── pom.xml
 └── .gitignore
 ```
+
 ---
 
 ## 🧩 UML Class Diagram
 
 <details>
-  <summary>Class Diagram: Dark Mode — Click to expand</summary>
+  <summary>Class Diagram (Dark Mode) – Click to view</summary>
 
-![UML Class Diagram](docs/sandwich-shop-diagram-dark.svg)
-
+![UML Class Diagram – Dark Mode](docs/sandwich-shop-diagram-dark.svg)
 </details>
 
 <details>
-  <summary>Class Diagram: Light Mode — Click to expand</summary>
+  <summary>Class Diagram (Light Mode) – Click to view</summary>
 
-![UML Class Diagram](docs/sandwich-shop-diagram-light.svg)
-
+![UML Class Diagram – Light Mode](docs/sandwich-shop-diagram-light.svg)
 </details>
 
 <details>
-  <summary>Class Diagram: Interactive — Click to expand</summary>
+  <summary>Class Diagram (Interactive View) – Click to explore</summary>
+
 
 ```mermaid
 classDiagram
-direction TB
+    direction TB
     class MenuItem {
-	    +getPrice() BigDecimal
+        +getPrice() BigDecimal
     }
     class Printable {
-	    +printSummary(PrintStream)
+        +printSummary(PrintStream)
     }
     class SandwichSize {
-	    FOUR_INCH
-	    EIGHT_INCH
-	    TWELVE_INCH
+        FOUR_INCH
+        EIGHT_INCH
+        TWELVE_INCH
     }
     class BreadType {
-	    WHITE
-	    WHEAT
-	    RYE
-	    WRAP
-	    ITALIAN
+        WHITE
+        WHEAT
+        RYE
+        WRAP
+        ITALIAN
     }
     class ToppingType {
-	    MEAT
-	    CHEESE
-	    REGULAR
-	    SAUCE
+        MEAT
+        CHEESE
+        REGULAR
+        SAUCE
     }
     class Topping {
-	    BACON
-	    HAM
-	    LETTUCE
-	    TOMATOES
-	    AMERICAN
-	    ...
+        BACON
+        HAM
+        LETTUCE
+        TOMATOES
+        AMERICAN
+        ...
     }
     class DrinkSize {
-	    SMALL
-	    MEDIUM
-	    LARGE
+        SMALL
+        MEDIUM
+        LARGE
     }
     class DrinkFlavor {
-	    COCA_COLA
-	    SPRITE
-	    FANTA
-	    PEPSI
-	    RED_BULL
-	    GATORADE
+        COCA_COLA
+        SPRITE
+        FANTA
+        PEPSI
+        RED_BULL
+        GATORADE
     }
     class ChipFlavor {
-	    LAYS_CLASSIC
-	    DORITOS_NACHO_CHEESE
-	    PRINGLES_ORIGINAL
-	    ...
+        LAYS_CLASSIC
+        DORITOS_NACHO_CHEESE
+        PRINGLES_ORIGINAL
+        ...
     }
     class Sandwich {
-	    -SandwichSize sandwichSize
-	    -BreadType breadType
-	    -List~Topping~ toppings
-	    -List~Topping~ extraToppings
-	    -Boolean isToasted
-	    +getPrice() : BigDecimal
-	    +printSummary(PrintStream)
+        -SandwichSize sandwichSize
+        -BreadType breadType
+        -List~Topping~ toppings
+        -List~Topping~ extraToppings
+        -Boolean isToasted
+        +getPrice(): BigDecimal
+        +printSummary(PrintStream)
     }
     class SignatureSandwich {
-	    -String name
-	    +printSummary(PrintStream)
+        -String name
+        +printSummary(PrintStream)
     }
     class Drink {
-	    -DrinkSize drinkSize
-	    -DrinkFlavor drinkFlavor
-	    +getPrice() : BigDecimal
-	    +printSummary(PrintStream)
+        -DrinkSize drinkSize
+        -DrinkFlavor drinkFlavor
+        +getPrice(): BigDecimal
+        +printSummary(PrintStream)
     }
     class Chip {
-	    -ChipFlavor chipFlavor
-	    +getPrice() : BigDecimal
-	    +printSummary(PrintStream)
+        -ChipFlavor chipFlavor
+        +getPrice(): BigDecimal
+        +printSummary(PrintStream)
     }
     class Order {
-	    -List~MenuItem~ items
-	    +addItem(MenuItem)
-	    +clear()
-	    +isEmpty() : boolean
-	    +getPrice() : BigDecimal
-	    +printSummary(PrintStream)
+        -List~MenuItem~ items
+        +addItem(MenuItem)
+        +clear()
+        +isEmpty(): boolean
+        +getPrice(): BigDecimal
+        +printSummary(PrintStream)
     }
     class SandwichBuilder {
-	    +build() : Sandwich
+        +build(): Sandwich
     }
     class SignatureSandwichBuilder {
-	    +build() : Sandwich
+        +build(): Sandwich
     }
     class DrinkBuilder {
-	    +build() : Drink
+        +build(): Drink
     }
     class ChipBuilder {
-	    +build() : Chip
+        +build(): Chip
     }
     class ReceiptManager {
-	    +saveOrderReceipt(List~MenuItem~, double)
+        +saveOrderReceipt(List~MenuItem~, double)
     }
     class SummaryCapture {
-	    +toString() : String
+        +toString(): String
     }
     class ConsolePrinter {
-	    +printHeader(String)
-	    +printLine(String)
-	    +printOption(int, String)
+        +printHeader(String)
+        +printLine(String)
+        +printOption(int, String)
     }
     class ToppingEditor {
-	    +addToppings(List~Topping~, List~Topping~)
-	    +removeToppings(List~Topping~)
+        +addToppings(List~Topping~, List~Topping~)
+        +removeToppings(List~Topping~)
     }
     class UserInputUtils {
-	    +intPrompt(String) : int
-	    +promptOption(String, T[]) : T
-	    +capitalizeWords(String) : String
-	    +formatEnum(Enum) : String
-	    +formatEnumList(List~Enum~) : String
+        +intPrompt(String): int
+        +promptOption(String, T[]): T
+        +capitalizeWords(String): String
+        +formatEnum(Enum): String
+        +formatEnumList(List~Enum~): String
     }
     class UserInterface {
-	    -Order currentOrder
-	    +init()
+        -Order currentOrder
+        +init()
     }
     class Main {
     }
     class SignatureSandwiches {
-	    +getAll() : List~SignatureSandwich~
+        +getAll(): List~SignatureSandwich~
     }
-	<<interface>> MenuItem
-	<<interface>> Printable
-	<<enum>> SandwichSize
-	<<enum>> BreadType
-	<<enum>> ToppingType
-	<<enum>> Topping
-	<<enum>> DrinkSize
-	<<enum>> DrinkFlavor
-	<<enum>> ChipFlavor
+    <<interface>> MenuItem
+    <<interface>> Printable
+    <<enum>> SandwichSize
+    <<enum>> BreadType
+    <<enum>> ToppingType
+    <<enum>> Topping
+    <<enum>> DrinkSize
+    <<enum>> DrinkFlavor
+    <<enum>> ChipFlavor
     SignatureSandwich --|> Sandwich
     Sandwich ..|> MenuItem
     Sandwich ..|> Printable
@@ -296,8 +300,8 @@ direction TB
     SandwichBuilder --> ToppingEditor
     ToppingEditor --> Topping
     ToppingEditor --> UserInputUtils
-    Main --> UserInterface : starts
-    UserInterface --> ConsolePrinter : uses
+    Main --> UserInterface: starts
+    UserInterface --> ConsolePrinter: uses
 
 ```
 
@@ -313,49 +317,46 @@ You can generate the full JavaDoc with:
   mvn javadoc:javadoc
 ```
 
-#
-
 ---
 
 # 🔧 Built With
 
-The sandwich-shop-cli is developed using modern Java tooling and best practices:
+The Sandwich Shop CLI is built using modern Java tools and best practices:
 
-- **Java 17+** — Core language and feature support
-- **Maven** — Build lifecycle, dependency management, testing, and JavaDoc
-- **BigDecimal** — Accurate currency calculations
-- **File I/O** — Timestamped receipt persistence
-- **Functional Interfaces** — Cleaner abstraction for `MenuItem`, `Printable`
-- **IntelliJ IDEA** — Development environment with integrated terminal, Git, and Maven support
+- **Java 17+** – Core language features and improvements
+- **Maven** – Manages builds, dependencies, testing, and documentation
+- **BigDecimal** – Ensures precise currency calculations
+- **File I/O** – Stores receipts with automatic timestamps
+- **Functional Interfaces** – Used for clean abstraction in `MenuItem` and `Printable`
+- **IntelliJ IDEA** – Full-featured development environment with Git, Maven, and terminal integration
 
 ---
 
 # 🤝 Contributing
 
-This project was created as a **solo capstone project**.  
-That said — you’re more than welcome to:
+This project was built as a **solo capstone**, but you're more than welcome to:
 
-- Fork it for your own learning
-- Expand it into a desktop app or RESTful API
-- Submit ideas or improvements for future versions
+- Fork it and use it for your own learning
+- Expand it into a desktop application or a RESTful API
+- Share ideas or suggestions to help improve future versions
 
-Pull requests are always reviewed with appreciation. ❤️
+Pull requests are always welcome and appreciated ❤️
 
 ---
 
 # 📌 Future Improvements
 
-Here are some fun and practical features planned for future releases:
+Here are a few fun and practical features planned for future updates:
 
-- 💻 **GUI Version**
-    - Build a Swing/JavaFX desktop version
-    - Drag-and-drop topping UI for customization
+- **GUI Version**
+  - Create a desktop app using Swing or JavaFX
+  - Add a drag-and-drop interface for customizing sandwiches
 
-- 🗃 **Database Integration**
-    - Persist orders using SQLite or PostgreSQL
-    - Enable order history and reporting features
+- **Database Integration**
+  - Store orders with SQLite or PostgreSQL
+  - Enable order history, search, and basic reporting
 
 ---
 
-Thank you for checking out this project! If it inspires your own CLI adventure or POS app — that’s a win already. 😄
-
+Thanks for checking out this project!  
+If it sparks ideas for your own CLI app or POS system, that’s already a win. 😄
