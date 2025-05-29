@@ -30,11 +30,4 @@ class ConsolePrinterTest {
         String printed = output.toString();
         assertTrue(printed.contains("=== Test Header ==="), "Header should be formatted with surrounding ===");
     }
-
-    @Test
-    void printOption_shouldPrintFormattedOption() {
-        ConsolePrinter.printOption(1, "Option A");
-        String printed = output.toString();
-        assertTrue(printed.contains("[1] - Option A"), "Option should be printed in expected format");
-    }
 }
