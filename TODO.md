@@ -1,4 +1,4 @@
-# ✅ sandwich-shop-cli — Project Task Tracker
+# ✅ Sandwich Shop CLI – Project Task Tracker
 
 ## ✅ Completed
 
@@ -48,7 +48,7 @@
 
 - [x] CLI-based navigation (`UserInterface`)
 - [x] Modular CLI sections: Add sandwich, drink, chip, signature
-- [x] Add order summary & confirmation
+- [x] Add order summary and confirmation
 - [x] Extract reusable prompt utilities
 - [x] Clean CLI output with `ConsolePrinter`
 
@@ -60,8 +60,9 @@
   - [x] `getPrice()` methods (sandwich, drink, chips)
   - [x] `ReceiptManager`
   - [x] `Order`
+  - [x] AVG test case above 85% coverage
 - [x] Add CLI usability edge cases
-- [ ] Final code cleanup and consistent Javadoc
+- [x] Final code cleanup and consistent Javadoc
 
 ---
 
