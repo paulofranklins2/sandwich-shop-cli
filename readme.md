@@ -82,7 +82,7 @@ TOTAL: $41.80
 
 # ✅ Project Task Tracker
 
-📋 **[View TODO list](TODO.md)** – Stay on top of tasks and keep track of project progress
+📋 **[View TODO List](TODO.md)** – Stay on top of tasks and keep track of project progress
 
 ---
 
@@ -315,18 +315,7 @@ classDiagram
     UserInterface --> ConsolePrinter: uses
 
 ```
-
 </details>
-
----
-
-## 📚 JavaDoc Documentation
-
-You can generate the full JavaDoc with:
-
-```bash
-  mvn javadoc:javadoc
-```
 
 ---
 
