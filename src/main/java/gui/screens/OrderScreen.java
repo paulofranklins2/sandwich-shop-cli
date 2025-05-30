@@ -7,9 +7,11 @@ import javafx.stage.Stage;
 import models.*;
 import models.enums.*;
 import persistence.ReceiptManager;
+import utils.ConsolePrinter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,11 +20,8 @@ public class OrderScreen extends StyledVBox {
 
     private final Order currentOrder = new Order();
     private final TextArea receiptArea = new TextArea();
-    private final Button checkoutBtn = new Button("💵 Checkout");
-    private final Stage stage;
 
     public OrderScreen(Stage stage) {
-        this.stage = stage;
 
         Label title = new Label("🛒 Build Your Order");
         title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
@@ -33,6 +32,7 @@ public class OrderScreen extends StyledVBox {
         Button chipBtn = new Button("\uD83C\uDF5F Add Chips");
         Button backBtn = new Button("\uD83D\uDD19 Back to Menu");
 
+        Button checkoutBtn = new Button("💵 Checkout");
         styleButton(sandwichBtn, signatureBtn, drinkBtn, chipBtn, checkoutBtn, backBtn);
 
         sandwichBtn.setOnAction(e -> {
@@ -112,29 +112,65 @@ public class OrderScreen extends StyledVBox {
     }
 
     private Chip buildChipViaDialog() {
-        ChoiceDialog<ChipFlavor> dialog = new ChoiceDialog<>(ChipFlavor.values()[0], ChipFlavor.values());
+        List<String> choices = Arrays.stream(ChipFlavor.values())
+                .map(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " ")))
+                .collect(Collectors.toList());
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
         dialog.setTitle("Choose Chips");
         dialog.setHeaderText("Select a chip flavor");
         dialog.setContentText("Flavor:");
-        Optional<ChipFlavor> result = dialog.showAndWait();
-        return result.map(Chip::new).orElse(null);
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isEmpty()) return null;
+
+        // Convert the formatted string back to enum
+        ChipFlavor selected = Arrays.stream(ChipFlavor.values())
+                .filter(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " "))
+                        .equals(result.get()))
+                .findFirst().orElse(null);
+
+        return selected != null ? new Chip(selected) : null;
     }
 
     private Drink buildDrinkViaDialog() {
-        ChoiceDialog<DrinkSize> sizeDialog = new ChoiceDialog<>(DrinkSize.MEDIUM, DrinkSize.values());
+        List<String> sizeChoices = Arrays.stream(DrinkSize.values())
+                .map(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " ")))
+                .collect(Collectors.toList());
+
+        ChoiceDialog<String> sizeDialog = new ChoiceDialog<>(sizeChoices.get(0), sizeChoices);
         sizeDialog.setTitle("Drink Size");
         sizeDialog.setHeaderText("Select drink size");
         sizeDialog.setContentText("Size:");
-        Optional<DrinkSize> sizeResult = sizeDialog.showAndWait();
+
+        Optional<String> sizeResult = sizeDialog.showAndWait();
         if (sizeResult.isEmpty()) return null;
 
-        ChoiceDialog<DrinkFlavor> flavorDialog = new ChoiceDialog<>(DrinkFlavor.values()[0], DrinkFlavor.values());
+        DrinkSize selectedSize = Arrays.stream(DrinkSize.values())
+                .filter(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " "))
+                        .equals(sizeResult.get()))
+                .findFirst().orElse(null);
+
+        List<String> flavorChoices = Arrays.stream(DrinkFlavor.values())
+                .map(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " ")))
+                .collect(Collectors.toList());
+
+        ChoiceDialog<String> flavorDialog = new ChoiceDialog<>(flavorChoices.get(0), flavorChoices);
         flavorDialog.setTitle("Drink Flavor");
         flavorDialog.setHeaderText("Select drink flavor");
         flavorDialog.setContentText("Flavor:");
-        Optional<DrinkFlavor> flavorResult = flavorDialog.showAndWait();
-        return flavorResult.map(flavor -> new Drink(sizeResult.get(), flavor)).orElse(null);
+
+        Optional<String> flavorResult = flavorDialog.showAndWait();
+        if (flavorResult.isEmpty()) return null;
+
+        DrinkFlavor selectedFlavor = Arrays.stream(DrinkFlavor.values())
+                .filter(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " "))
+                        .equals(flavorResult.get()))
+                .findFirst().orElse(null);
+
+        return (selectedSize != null && selectedFlavor != null) ? new Drink(selectedSize, selectedFlavor) : null;
     }
+
 
     private Sandwich buildCustomSandwichViaDialog() {
         ChoiceDialog<BreadType> breadDialog = new ChoiceDialog<>(BreadType.WHITE, BreadType.values());
