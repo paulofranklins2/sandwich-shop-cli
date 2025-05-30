@@ -44,7 +44,9 @@ public enum Topping {
     KETCHUP(ToppingType.SAUCE),
     RANCH(ToppingType.SAUCE),
     THOUSAND_ISLANDS(ToppingType.SAUCE),
-    VINAIGRETTE(ToppingType.SAUCE);
+    VINAIGRETTE(ToppingType.SAUCE),
+    HOT_SAUCE(ToppingType.SAUCE),
+    BBQ(ToppingType.REGULAR);
 
     private final ToppingType type;
 
