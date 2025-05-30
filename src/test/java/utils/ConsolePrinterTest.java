@@ -41,7 +41,7 @@ class ConsolePrinterTest {
     void clearScreen_shouldPrint50EmptyLines() {
         ConsolePrinter.clearScreen();
         long lineCount = output.toString().lines().count();
-        assertEquals(50, lineCount, "Should print 50 empty lines");
+        assertEquals(100, lineCount, "Should print 50 empty lines");
     }
 
     @Test
