@@ -4,6 +4,8 @@ import builders.ChipBuilder;
 import builders.DrinkBuilder;
 import builders.SandwichBuilder;
 import builders.SignatureSandwichBuilder;
+import gui.MainFX;
+import javafx.application.Application;
 import models.Order;
 import persistence.ReceiptManager;
 
@@ -40,6 +42,7 @@ public class UserInterface {
             switch (option) {
                 case 1 -> orderScreen();
                 case 2 -> viewReceiptById();
+                case 3 -> Application.launch(MainFX.class);
                 case 0 -> {
                     System.out.println("Goodbye!");
                     running = false;

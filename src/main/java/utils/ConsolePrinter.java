@@ -91,6 +91,7 @@ public class ConsolePrinter {
         printHeader("Welcome to Sandwich Shop POS");
         System.out.println("[1] - New Order");
         System.out.println("[2] - View Receipt by ID");
+        System.out.println("[3] - GUI");
         System.out.println("[0] - Exit");
     }
 

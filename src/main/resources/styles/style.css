@@ -1,0 +1,24 @@
+.root {
+    -fx-background-color: #fdf6ec;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.menu-button {
+    -fx-font-size: 16px;
+    -fx-background-color: #ffe5b4;
+    -fx-text-fill: #3a3a3a;
+    -fx-border-color: #e0c59b;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.menu-button:hover {
+    -fx-background-color: #ffcb87;
+}

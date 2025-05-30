@@ -15,6 +15,7 @@ import java.util.List;
 @Getter
 public class SignatureSandwich extends Sandwich {
 
+    @Getter
     private final String name;
 
     /**
@@ -42,6 +43,11 @@ public class SignatureSandwich extends Sandwich {
     public void printSummary(PrintStream out) {
         out.println("Signature Sandwich: " + name);
         super.printSummary(out);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
 
