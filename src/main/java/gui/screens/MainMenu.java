@@ -29,9 +29,9 @@ public class MainMenu extends StyledVBox {
         Button viewReceiptBtn = new Button("\uD83D\uDCC4 View Receipt by ID");
         Button exitBtn = new Button("\uD83D\uDD12 Exit");
 
-        addIcon(newOrderBtn, "/images/order.png");
-        addIcon(viewReceiptBtn, "/images/receipt.png");
-        addIcon(exitBtn, "/images/exit.png");
+//        addIcon(newOrderBtn, "/images/order.png");
+//        addIcon(viewReceiptBtn, "/images/receipt.png");
+//        addIcon(exitBtn, "/images/exit.png");
 
         styleButton(newOrderBtn, viewReceiptBtn, exitBtn);
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static utils.ConsolePrinter.printHeader;
-import static utils.UserPromptUtils.*;
+import static utils.UserPromptUtils.intPrompt;
 
 /**
  * Builds a {@link Sandwich} using a preset {@link SignatureSandwich}.

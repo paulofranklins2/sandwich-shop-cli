@@ -4,9 +4,12 @@ import data.SignatureSandwiches;
 import gui.helpers.DialogBuilder;
 import gui.helpers.DialogUtils;
 import gui.util.StyledVBox;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
-import models.*;
+import models.Order;
 import persistence.ReceiptManager;
 
 import java.io.IOException;

@@ -7,7 +7,8 @@ import java.util.List;
 
 import static utils.ConsolePrinter.formatEnum;
 import static utils.ConsolePrinter.formatEnumList;
-import static utils.UserPromptUtils.*;
+import static utils.UserPromptUtils.intPrompt;
+import static utils.UserPromptUtils.promptOption;
 
 /**
  * Helps the user tweak sandwich toppings in the CLI.
