@@ -95,7 +95,7 @@ public class DialogBuilder {
         List<Topping> selected = new ArrayList<>();
         List<String> names = options.stream().map(Enum::name).collect(Collectors.toList());
 
-        ChoiceDialog<String> dialog = new ChoiceDialog<>(names.get(0), names);
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(names.getFirst(), names);
         dialog.setTitle(title);
         dialog.setHeaderText(null);
         dialog.setContentText("Pick a topping:");
