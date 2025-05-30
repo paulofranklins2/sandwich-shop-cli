@@ -1,62 +1,43 @@
 package gui.screens;
 
-import data.SignatureSandwiches;
+import gui.util.StyledVBox;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import models.SignatureSandwich;
-import persistence.ReceiptManager;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class MainMenu extends VBox {
+public class MainMenu extends StyledVBox {
 
     private final Stage stage;
 
     public MainMenu(Stage stage) {
         this.stage = stage;
-        setSpacing(40);
-        setPadding(new Insets(80));
-        setAlignment(Pos.CENTER);
 
-        Label title = new Label("Welcome to the Sandwich Shop POS");
+        Label title = new Label("\uD83C\uDFEA Welcome to the Sandwich Shop POS");
         title.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #333;");
 
-        Button newOrderBtn = createButton("Start New Order", "/images/order.png");
-        Button viewReceiptBtn = createButton("View Receipt by ID", "/images/receipt.png");
-        Button exitBtn = createButton("Exit", "/images/exit.png");
+        Button newOrderBtn = new Button("\uD83D\uDCDD Start New Order");
+        Button viewReceiptBtn = new Button("\uD83D\uDCC4 View Receipt by ID");
+        Button exitBtn = new Button("\uD83D\uDD12 Exit");
+
+        addIcon(newOrderBtn, "/images/order.png");
+        addIcon(viewReceiptBtn, "/images/receipt.png");
+        addIcon(exitBtn, "/images/exit.png");
+
+        styleButton(newOrderBtn, viewReceiptBtn, exitBtn);
 
         newOrderBtn.setOnAction(e -> showOrderScreen());
         viewReceiptBtn.setOnAction(e -> showReceiptPrompt());
         exitBtn.setOnAction(e -> stage.close());
 
         getChildren().addAll(title, newOrderBtn, viewReceiptBtn, exitBtn);
-    }
-
-    private Button createButton(String text, String iconPath) {
-        Button button = new Button(text);
-        button.setPrefWidth(300);
-        button.setPrefHeight(60);
-        button.setStyle("-fx-font-size: 18px; -fx-background-color: #ffe5b4; -fx-text-fill: #3a3a3a; -fx-background-radius: 10;");
-        try {
-            ImageView icon = new ImageView(new Image(getClass().getResourceAsStream(iconPath)));
-            icon.setFitWidth(24);
-            icon.setFitHeight(24);
-            button.setGraphic(icon);
-        } catch (Exception e) {
-            System.out.println("Icon missing: " + iconPath);
-        }
-        return button;
     }
 
     private void showOrderScreen() {
@@ -99,11 +80,11 @@ public class MainMenu extends VBox {
         receiptView.setStyle("-fx-font-family: 'monospace'; -fx-font-size: 14px;");
 
         Button backBtn = new Button("Back");
-        backBtn.setPrefWidth(200);
+        styleButton(backBtn);
 
-        VBox layout = new VBox(30, new Label("📄 Receipt Details"), receiptView, backBtn);
-        layout.setAlignment(Pos.CENTER);
-        layout.setPadding(new Insets(40));
+        StyledVBox layout = new StyledVBox();
+        layout.setSpacing(20);
+        layout.getChildren().addAll(new Label("📄 Receipt Details"), receiptView, backBtn);
 
         backBtn.setOnAction(e -> {
             MainMenu mainMenu = new MainMenu(stage);
@@ -125,13 +106,14 @@ public class MainMenu extends VBox {
         error.showAndWait();
     }
 
-    public static String formatEnum(Enum<?> e) {
-        return Arrays.stream(e.name().toLowerCase().split("_"))
-                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
-                .collect(Collectors.joining(" "));
-    }
-
-    public static String formatSignature(SignatureSandwich s) {
-        return s.getName();
+    private void addIcon(Button button, String iconPath) {
+        try {
+            ImageView icon = new ImageView(new Image(getClass().getResourceAsStream(iconPath)));
+            icon.setFitWidth(24);
+            icon.setFitHeight(24);
+            button.setGraphic(icon);
+        } catch (Exception e) {
+            System.out.println("Missing icon: " + iconPath);
+        }
     }
 }
