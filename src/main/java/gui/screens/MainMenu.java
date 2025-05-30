@@ -10,10 +10,13 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * The main screen users see when the app starts. Allows starting an order or viewing receipts.
+ */
 public class MainMenu extends StyledVBox {
-
     private final Stage stage;
 
     public MainMenu(Stage stage) {
@@ -42,7 +45,7 @@ public class MainMenu extends StyledVBox {
     private void showOrderScreen() {
         OrderScreen orderScreen = new OrderScreen(stage);
         Scene scene = new Scene(orderScreen, 1920, 1080);
-        scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm());
         stage.setScene(scene);
     }
 
@@ -53,26 +56,27 @@ public class MainMenu extends StyledVBox {
         dialog.setContentText("Receipt ID (e.g., 20250523-172201):");
 
         Optional<String> result = dialog.showAndWait();
-        result.ifPresent(id -> {
-            String path = "src/main/resources/receipt/" + id;
-            File file = new File(path);
-            if (!file.exists()) {
-                showError("Receipt Not Found", "No receipt found with that ID.");
-                return;
-            }
+        result.ifPresent(this::loadAndDisplayReceipt);
+    }
 
-            try {
-                String content = Files.readString(file.toPath());
-                showReceiptOnScreen(id, content);
-            } catch (IOException ex) {
-                showError("Read Error", "Could not read receipt: " + ex.getMessage());
-            }
-        });
+    private void loadAndDisplayReceipt(String id) {
+        String path = "src/main/resources/receipt/" + id;
+        File file = new File(path);
+        if (!file.exists()) {
+            showError("Receipt Not Found", "No receipt found with that ID.");
+            return;
+        }
+
+        try {
+            String content = Files.readString(file.toPath());
+            showReceiptOnScreen(id, content);
+        } catch (IOException ex) {
+            showError("Read Error", "Could not read receipt: " + ex.getMessage());
+        }
     }
 
     private void showReceiptOnScreen(String id, String content) {
-        TextArea receiptView = new TextArea();
-        receiptView.setText("=== Receipt " + id + " ===\n\n" + content);
+        TextArea receiptView = new TextArea("=== Receipt " + id + " ===\n\n" + content);
         receiptView.setEditable(false);
         receiptView.setWrapText(true);
         receiptView.setPrefSize(1400, 800);
@@ -83,17 +87,16 @@ public class MainMenu extends StyledVBox {
 
         StyledVBox layout = new StyledVBox();
         layout.setSpacing(20);
-        layout.getChildren().addAll(new Label("📄 Receipt Details"), receiptView, backBtn);
+        layout.getChildren().addAll(new Label("\uD83D\uDCC4 Receipt Details"), receiptView, backBtn);
 
         backBtn.setOnAction(e -> {
-            MainMenu mainMenu = new MainMenu(stage);
-            Scene scene = new Scene(mainMenu, 1920, 1080);
-            scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+            Scene scene = new Scene(new MainMenu(stage), 1920, 1080);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm());
             stage.setScene(scene);
         });
 
         Scene scene = new Scene(layout, 1920, 1080);
-        scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm());
         stage.setScene(scene);
     }
 
@@ -107,7 +110,7 @@ public class MainMenu extends StyledVBox {
 
     private void addIcon(Button button, String iconPath) {
         try {
-            ImageView icon = new ImageView(new Image(getClass().getResourceAsStream(iconPath)));
+            ImageView icon = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream(iconPath))));
             icon.setFitWidth(24);
             icon.setFitHeight(24);
             button.setGraphic(icon);

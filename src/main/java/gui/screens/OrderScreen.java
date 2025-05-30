@@ -1,3 +1,4 @@
+// OrderScreen.java — handles GUI for order building
 package gui.screens;
 
 import data.SignatureSandwiches;
@@ -10,12 +11,13 @@ import persistence.ReceiptManager;
 import utils.ConsolePrinter;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * This screen lets the user build an order:
+ * add custom sandwiches, signature ones, drinks, chips, and check out.
+ */
 public class OrderScreen extends StyledVBox {
 
     private final Order currentOrder = new Order();
@@ -31,34 +33,14 @@ public class OrderScreen extends StyledVBox {
         Button drinkBtn = new Button("\uD83C\uDF79 Add Drink");
         Button chipBtn = new Button("\uD83C\uDF5F Add Chips");
         Button backBtn = new Button("\uD83D\uDD19 Back to Menu");
+        Button checkoutBtn = new Button("\uD83D\uDCB5 Checkout");
 
-        Button checkoutBtn = new Button("💵 Checkout");
         styleButton(sandwichBtn, signatureBtn, drinkBtn, chipBtn, checkoutBtn, backBtn);
 
-        sandwichBtn.setOnAction(e -> {
-            Sandwich s = buildCustomSandwichViaDialog();
-            if (s != null) currentOrder.addItem(s);
-            updateReceipt();
-        });
-
-        signatureBtn.setOnAction(e -> {
-            Sandwich s = buildSignatureSandwichViaDialog();
-            if (s != null) currentOrder.addItem(s);
-            updateReceipt();
-        });
-
-        drinkBtn.setOnAction(e -> {
-            Drink drink = buildDrinkViaDialog();
-            if (drink != null) currentOrder.addItem(drink);
-            updateReceipt();
-        });
-
-        chipBtn.setOnAction(e -> {
-            Chip chip = buildChipViaDialog();
-            if (chip != null) currentOrder.addItem(chip);
-            updateReceipt();
-        });
-
+        sandwichBtn.setOnAction(e -> addItem(buildCustomSandwichViaDialog()));
+        signatureBtn.setOnAction(e -> addItem(buildSignatureSandwichViaDialog()));
+        drinkBtn.setOnAction(e -> addItem(buildDrinkViaDialog()));
+        chipBtn.setOnAction(e -> addItem(buildChipViaDialog()));
         checkoutBtn.setOnAction(e -> checkout());
         backBtn.setOnAction(e -> stage.getScene().setRoot(new MainMenu(stage)));
 
@@ -69,11 +51,17 @@ public class OrderScreen extends StyledVBox {
         getChildren().addAll(title, sandwichBtn, signatureBtn, drinkBtn, chipBtn, receiptArea, checkoutBtn, backBtn);
     }
 
+    private void addItem(interfaces.MenuItem item) {
+        if (item != null) {
+            currentOrder.addItem(item);
+            updateReceipt();
+        }
+    }
+
     private void updateReceipt() {
         receiptArea.clear();
         var out = new java.io.ByteArrayOutputStream();
-        var print = new java.io.PrintStream(out);
-        currentOrder.printSummary(print);
+        currentOrder.printSummary(new java.io.PrintStream(out));
         receiptArea.setText(out.toString());
     }
 
@@ -94,13 +82,14 @@ public class OrderScreen extends StyledVBox {
         }
     }
 
-    private Sandwich buildSignatureSandwichViaDialog() {
+    private interfaces.MenuItem buildSignatureSandwichViaDialog() {
         List<SignatureSandwich> options = SignatureSandwiches.getAll();
-        ChoiceDialog<SignatureSandwich> dialog = new ChoiceDialog<>(options.get(0), options);
+        ChoiceDialog<SignatureSandwich> dialog = new ChoiceDialog<>(options.getFirst(), options);
         dialog.setTitle("Choose Signature Sandwich");
-        dialog.setHeaderText("Select a preset sandwich to add to your order");
+        dialog.setHeaderText("Pick a pre-made sandwich");
         dialog.setContentText("Sandwich:");
         Optional<SignatureSandwich> result = dialog.showAndWait();
+
         return result.map(base -> new SignatureSandwich(
                 base.getName(),
                 base.getSandwichSize(),
@@ -111,131 +100,102 @@ public class OrderScreen extends StyledVBox {
         )).orElse(null);
     }
 
-    private Chip buildChipViaDialog() {
-        List<String> choices = Arrays.stream(ChipFlavor.values())
+    private interfaces.MenuItem buildChipViaDialog() {
+        List<String> chipOptions = Arrays.stream(ChipFlavor.values())
                 .map(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " ")))
                 .collect(Collectors.toList());
 
-        ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(chipOptions.getFirst(), chipOptions);
         dialog.setTitle("Choose Chips");
-        dialog.setHeaderText("Select a chip flavor");
+        dialog.setHeaderText("Pick a chip flavor");
         dialog.setContentText("Flavor:");
-
         Optional<String> result = dialog.showAndWait();
-        if (result.isEmpty()) return null;
 
-        // Convert the formatted string back to enum
-        ChipFlavor selected = Arrays.stream(ChipFlavor.values())
-                .filter(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " "))
-                        .equals(result.get()))
-                .findFirst().orElse(null);
-
-        return selected != null ? new Chip(selected) : null;
+        return result.flatMap(flavorStr ->
+                Arrays.stream(ChipFlavor.values())
+                        .filter(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " ")).equals(flavorStr))
+                        .findFirst()
+                        .map(Chip::new)
+        ).orElse(null);
     }
 
-    private Drink buildDrinkViaDialog() {
-        List<String> sizeChoices = Arrays.stream(DrinkSize.values())
-                .map(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " ")))
-                .collect(Collectors.toList());
+    private interfaces.MenuItem buildDrinkViaDialog() {
+        DrinkSize size = promptEnumOption("Drink Size", DrinkSize.values());
+        if (size == null) return null;
 
-        ChoiceDialog<String> sizeDialog = new ChoiceDialog<>(sizeChoices.get(0), sizeChoices);
-        sizeDialog.setTitle("Drink Size");
-        sizeDialog.setHeaderText("Select drink size");
-        sizeDialog.setContentText("Size:");
+        DrinkFlavor flavor = promptEnumOption("Drink Flavor", DrinkFlavor.values());
+        if (flavor == null) return null;
 
-        Optional<String> sizeResult = sizeDialog.showAndWait();
-        if (sizeResult.isEmpty()) return null;
-
-        DrinkSize selectedSize = Arrays.stream(DrinkSize.values())
-                .filter(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " "))
-                        .equals(sizeResult.get()))
-                .findFirst().orElse(null);
-
-        List<String> flavorChoices = Arrays.stream(DrinkFlavor.values())
-                .map(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " ")))
-                .collect(Collectors.toList());
-
-        ChoiceDialog<String> flavorDialog = new ChoiceDialog<>(flavorChoices.get(0), flavorChoices);
-        flavorDialog.setTitle("Drink Flavor");
-        flavorDialog.setHeaderText("Select drink flavor");
-        flavorDialog.setContentText("Flavor:");
-
-        Optional<String> flavorResult = flavorDialog.showAndWait();
-        if (flavorResult.isEmpty()) return null;
-
-        DrinkFlavor selectedFlavor = Arrays.stream(DrinkFlavor.values())
-                .filter(f -> ConsolePrinter.capitalizeWords(f.name().toLowerCase().replace("_", " "))
-                        .equals(flavorResult.get()))
-                .findFirst().orElse(null);
-
-        return (selectedSize != null && selectedFlavor != null) ? new Drink(selectedSize, selectedFlavor) : null;
+        return new Drink(size, flavor);
     }
 
+    private interfaces.MenuItem buildCustomSandwichViaDialog() {
+        BreadType bread = promptEnumOption("Bread Type", BreadType.values());
+        SandwichSize size = promptEnumOption("Sandwich Size", SandwichSize.values());
+        if (bread == null || size == null) return null;
 
-    private Sandwich buildCustomSandwichViaDialog() {
-        ChoiceDialog<BreadType> breadDialog = new ChoiceDialog<>(BreadType.WHITE, BreadType.values());
-        breadDialog.setTitle("Bread Type");
-        breadDialog.setHeaderText("Choose your bread");
-        breadDialog.setContentText("Bread:");
-        Optional<BreadType> breadResult = breadDialog.showAndWait();
-        if (breadResult.isEmpty()) return null;
+        List<Topping> toppings = chooseToppings(false);
+        List<Topping> extraToppings = confirm("Add extra toppings?") ? chooseToppings(true) : new ArrayList<>();
+        boolean isToasted = confirm("Do you want your sandwich toasted?");
 
-        ChoiceDialog<SandwichSize> sizeDialog = new ChoiceDialog<>(SandwichSize.EIGHT_INCH, SandwichSize.values());
-        sizeDialog.setTitle("Sandwich Size");
-        sizeDialog.setHeaderText("Choose your sandwich size");
-        sizeDialog.setContentText("Size:");
-        Optional<SandwichSize> sizeResult = sizeDialog.showAndWait();
-        if (sizeResult.isEmpty()) return null;
+        return new Sandwich(size, bread, toppings, extraToppings, isToasted);
+    }
 
-        List<Topping> selectedToppings = new ArrayList<>();
+    private <T extends Enum<T>> T promptEnumOption(String title, T[] values) {
+        List<String> options = Arrays.stream(values)
+                .map(v -> ConsolePrinter.capitalizeWords(v.name().toLowerCase().replace("_", " ")))
+                .collect(Collectors.toList());
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(options.getFirst(), options);
+        dialog.setTitle(title);
+        dialog.setHeaderText("Pick one");
+        dialog.setContentText("Choice:");
+        Optional<String> result = dialog.showAndWait();
+
+        return result.flatMap(choice ->
+                Arrays.stream(values)
+                        .filter(v -> ConsolePrinter.capitalizeWords(v.name().toLowerCase().replace("_", " ")).equals(choice))
+                        .findFirst()
+        ).orElse(null);
+    }
+
+    private List<Topping> chooseToppings(boolean isExtra) {
+        List<Topping> selected = new ArrayList<>();
+
         for (ToppingType type : ToppingType.values()) {
-            if (confirm("Do you want to add " + type.name().toLowerCase().replace("_", " ") + " toppings?")) {
-                selectedToppings.addAll(promptToppings("Choose " + type.name() + " Toppings", Topping.getByType(type)));
+            if (confirm("Add " + (isExtra ? "extra " : "") + type.name().toLowerCase() + " toppings?")) {
+                selected.addAll(promptToppings("Choose " + (isExtra ? "Extra " : "") + type.name() + " Toppings", Topping.getByType(type)));
             }
         }
 
-        List<Topping> extraToppings = new ArrayList<>();
-        if (confirm("Add extra toppings?")) {
-            for (ToppingType type : ToppingType.values()) {
-                if (confirm("Extra " + type.name().toLowerCase().replace("_", " ") + " toppings?")) {
-                    extraToppings.addAll(promptToppings("Choose Extra " + type.name() + " Toppings", Topping.getByType(type)));
-                }
-            }
-        }
-
-        Alert toastAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        toastAlert.setTitle("Toasted?");
-        toastAlert.setHeaderText("Do you want your sandwich toasted?");
-        toastAlert.setContentText("Click OK for Yes, Cancel for No.");
-        boolean isToasted = toastAlert.showAndWait().filter(btn -> btn == ButtonType.OK).isPresent();
-
-        return new Sandwich(sizeResult.get(), breadResult.get(), selectedToppings, extraToppings, isToasted);
+        return selected;
     }
 
     private List<Topping> promptToppings(String title, List<Topping> options) {
         List<Topping> selected = new ArrayList<>();
-        List<String> optionNames = options.stream().map(Enum::name).collect(Collectors.toList());
-        ChoiceDialog<String> dialog = new ChoiceDialog<>(optionNames.get(0), optionNames);
+        List<String> names = options.stream().map(Enum::name).collect(Collectors.toList());
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>(names.getFirst(), names);
         dialog.setTitle(title);
         dialog.setHeaderText(null);
-        dialog.setContentText("Select one (reopen to add more):");
+        dialog.setContentText("Pick a topping:");
 
         while (true) {
             Optional<String> result = dialog.showAndWait();
             if (result.isEmpty()) break;
             selected.add(Topping.valueOf(result.get()));
-            if (!confirm("Add another topping of this type?")) break;
+            if (!confirm("Add another topping?")) break;
         }
+
         return selected;
     }
 
     private boolean confirm(String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
+        alert.setTitle("Confirm");
         alert.setHeaderText(null);
         alert.setContentText(message);
-        Optional<ButtonType> result = alert.showAndWait();
-        return result.filter(btn -> btn == ButtonType.OK).isPresent();
+        return alert.showAndWait().filter(btn -> btn == ButtonType.OK).isPresent();
     }
 
     private void showAlert(Alert.AlertType type, String title, String message) {

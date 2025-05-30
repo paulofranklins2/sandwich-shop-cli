@@ -5,14 +5,19 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
+/**
+ * A VBox with pre-configured spacing and alignment for uniform layout.
+ */
 public class StyledVBox extends VBox {
-
     public StyledVBox() {
         setSpacing(30);
         setPadding(new Insets(40));
         setAlignment(Pos.CENTER);
     }
 
+    /**
+     * Applies a consistent style to multiple buttons.
+     */
     public void styleButton(Button... buttons) {
         for (Button b : buttons) {
             b.setPrefWidth(280);
