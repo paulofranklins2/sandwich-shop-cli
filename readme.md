@@ -86,30 +86,42 @@ TOTAL: $41.80
 
 ---
 
-## 📁 Current Project Structure
+## 📁 Project Structure
 
 ```text
-sandwich-shop-cli/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── app/                 # Main launcher
-│   │   │   └── builders/            # Builders for Sandwich, Drink, Chip, Signature
-│   │   │   └── data/                # Signature sandwich data source
-│   │   │   └── interfaces/          # MenuItem, Printable
-│   │   │   └── models/              # Core models
-│   │   │   │   └── enums/           # All enum types (Topping, Sizes, etc.)
-│   │   │   └── persistence/         # ReceiptManager & summary output
-│   │   │   └── ui/                  # CLI controller (UserInterface)
-│   │   │   └── utils/               # ToppingEditor, UserInputUtils, ConsolePrinter
-│   │   └── resources/              # Saved receipts
-├── docs/                           # UML diagrams and design notes
-├── test/                           # (Upcoming) Unit tests
-├── README.md
-├── TODO.md
-├── EXTRAS.md
-├── pom.xml
-└── .gitignore
+  sandwich-shop-cli/
+  ├── docs/                          # UML diagrams, design notes
+  ├── src/
+  │   ├── main/
+  │   │   ├── java/
+  │   │   │   ├── app/               # Entry points
+  │   │   │   ├── data/              # Data loaders and static content
+  │   │   │   ├── gui/               # JavaFX GUI layer
+  │   │   │   │   ├── helpers/       # Shared dialog/utility helpers
+  │   │   │   │   ├── screens/       # JavaFX scenes
+  │   │   │   │   └── util/          # Layout widgets (e.g., styled VBox)
+  │   │   │   ├── interfaces/        # Shared contracts
+  │   │   │   ├── models/            # Domain models (Sandwich, Drink, Chip)
+  │   │   │   │   ├── enums/         # Enum types (flavors, sizes, toppings)
+  │   │   │   ├── builders/          # Sandwich/Drink/Chip builders (used in CLI)
+  │   │   │   ├── persistence/       # File I/O and order storage
+  │   │   │   ├── ui/                # CLI interaction handlers
+  │   │   │   └── utils/             # CLI-only utilities
+  │   │   └── resources/             # Non-Java resources
+  │   │       ├── receipt/           # Saved receipts
+  │   │       └── styles/            # CSS for JavaFX
+  │   └── test/                      # JUnit tests
+  │       ├── builders/
+  │       ├── data/
+  │       ├── models/
+  │       ├── persistence/
+  │       ├── ui/
+  │       └── utils/
+  ├── .gitignore
+  ├── README.md
+  ├── TODO.md
+  ├── EXTRAS.md
+  ├── pom.xml
 ```
 
 ---
@@ -130,7 +142,6 @@ sandwich-shop-cli/
 
 <details>
   <summary>Class Diagram (Interactive View) – Click to explore</summary>
-
 
 ```mermaid
 classDiagram
@@ -349,11 +360,11 @@ Pull requests are always welcome and appreciated ❤️
 Here are a few fun and practical features planned for future updates:
 
 - **GUI Version**
-  - Add a drag-and-drop interface for customizing sandwiches
+    - Add a drag-and-drop interface for customizing sandwiches
 
 - **Database Integration**
-  - Store orders with SQLite or PostgreSQL
-  - Enable order history, search, and basic reporting
+    - Store orders with SQLite or PostgreSQL
+    - Enable order history, search, and basic reporting
 
 ---
 
