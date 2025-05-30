@@ -8,11 +8,11 @@
 - [x] Created `/docs` folder
 - [x] Added `class-diagram.svg` to documentation
 - [x] Defined enums:
-  - [x] `BreadType`
-  - [x] `SandwichSize`
-  - [x] `DrinkSize`
-  - [x] `Topping`
-  - [x] `ToppingType`
+    - [x] `BreadType`
+    - [x] `SandwichSize`
+    - [x] `DrinkSize`
+    - [x] `Topping`
+    - [x] `ToppingType`
 - [x] Defined project package structure (`com.delicious`)
 - [x] Organized `model/enums` package and cleaned up class locations
 - [x] Created UML class diagram in Mermaid and SVG format
@@ -22,6 +22,9 @@
 - [x] Added Signature Sandwich support (with customization)
 - [x] Created topping editor for add/remove
 - [x] Generated Javadoc using Maven
+- [x] **GUI Version**
+-
+    - [x] Create a desktop app using Swing or JavaFX
 
 ---
 
@@ -57,10 +60,10 @@
 ## 🚧 Testing & Polish
 
 - [x] Add JUnit tests:
-  - [x] `getPrice()` methods (sandwich, drink, chips)
-  - [x] `ReceiptManager`
-  - [x] `Order`
-  - [x] AVG test case above 85% coverage
+    - [x] `getPrice()` methods (sandwich, drink, chips)
+    - [x] `ReceiptManager`
+    - [x] `Order`
+    - [x] AVG test case above 85% coverage
 - [x] Add CLI usability edge cases
 - [x] Final code cleanup and consistent Javadoc
 
@@ -78,24 +81,36 @@
 
 ```text
 sandwich-shop-cli/
+├── docs/                          # UML diagrams, design notes
 ├── src/
 │   ├── main/
 │   │   ├── java/
-│   │   │   └── app/                 # Main launcher
-│   │   │   └── builders/            # Builders for Sandwich, Drink, Chip, Signature
-│   │   │   └── data/                # Signature sandwich data source
-│   │   │   └── interfaces/          # MenuItem, Printable
-│   │   │   └── models/              # Core models
-│   │   │   │   └── enums/           # All enum types (Topping, Sizes, etc.)
-│   │   │   └── persistence/         # ReceiptManager & summary output
-│   │   │   └── ui/                  # CLI controller (UserInterface)
-│   │   │   └── utils/               # ToppingEditor, UserInputUtils, ConsolePrinter
-│   │   └── resources/              # Saved receipts
-├── docs/                           # UML diagrams and design notes
-├── test/                           # (Upcoming) Unit tests
+│   │   │   ├── app/               # Entry points
+│   │   │   ├── data/              # Data loaders and static content
+│   │   │   ├── gui/               # JavaFX GUI layer
+│   │   │   │   ├── helpers/       # Shared dialog/utility helpers
+│   │   │   │   ├── screens/       # JavaFX scenes
+│   │   │   │   └── util/          # Layout widgets (e.g., styled VBox)
+│   │   │   ├── interfaces/        # Shared contracts
+│   │   │   ├── models/            # Domain models (Sandwich, Drink, Chip)
+│   │   │   │   ├── enums/         # Enum types (flavors, sizes, toppings)
+│   │   │   ├── builders/          # Sandwich/Drink/Chip builders (used in CLI)
+│   │   │   ├── persistence/       # File I/O and order storage
+│   │   │   ├── ui/                # CLI interaction handlers
+│   │   │   └── utils/             # CLI-only utilities
+│   │   └── resources/             # Non-Java resources
+│   │       ├── receipt/           # Saved receipts
+│   │       └── styles/            # CSS for JavaFX
+│   └── test/                      # JUnit tests
+│       ├── builders/
+│       ├── data/
+│       ├── models/
+│       ├── persistence/
+│       ├── ui/
+│       └── utils/
+├── .gitignore
 ├── README.md
 ├── TODO.md
 ├── EXTRAS.md
 ├── pom.xml
-└── .gitignore
 ```

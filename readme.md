@@ -349,7 +349,6 @@ Pull requests are always welcome and appreciated ❤️
 Here are a few fun and practical features planned for future updates:
 
 - **GUI Version**
-  - Create a desktop app using Swing or JavaFX
   - Add a drag-and-drop interface for customizing sandwiches
 
 - **Database Integration**
