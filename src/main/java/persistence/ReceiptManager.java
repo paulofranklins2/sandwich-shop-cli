@@ -3,12 +3,16 @@ package persistence;
 import interfaces.MenuItem;
 import interfaces.Printable;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Scanner;
+
+import static utils.ConsolePrinter.printHeader;
 
 /**
  * Handles saving order receipts to files.
@@ -32,7 +36,7 @@ public class ReceiptManager {
 
         // Write the receipt to the file
         try (PrintStream printStream = new PrintStream(new FileOutputStream(path + fileName))) {
-            printStream.println("===============  Order Receipt =============== ");
+            printStream.println(printHeader("Order Receipt"));
             printStream.println("Date: " + now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             printStream.println();
 
@@ -60,8 +64,9 @@ public class ReceiptManager {
     public void loadReceiptById(String receiptId) throws IOException {
         String fullPath = path + receiptId;
 
-        try (var reader = new java.util.Scanner(new java.io.File(fullPath))) {
-            System.out.println("=== Receipt: " + receiptId + " ===");
+        try (var reader = new Scanner(new File(fullPath))) {
+            printHeader("Loading receipt by id: " + receiptId);
+//            System.out.println("=== Receipt: " + receiptId + " ===");
             while (reader.hasNextLine()) {
                 System.out.println(reader.nextLine());
             }

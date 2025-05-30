@@ -15,7 +15,7 @@ public class ConsolePrinter {
      *
      * @param title the title to show at the top of a section
      */
-    public static void printHeader(String title) {
+    public static String printHeader(String title) {
         // Total width for the header line
         int headerWidth = 50;
         int paddingLeft = (headerWidth - title.length()) / 2;
@@ -26,6 +26,8 @@ public class ConsolePrinter {
         System.out.println(line);
         System.out.println(centeredTitle);
         System.out.println(line);
+        //last minute change to use it on my file writer
+        return line + "\n" + centeredTitle + "\n" + line;
     }
 
     /**
@@ -33,7 +35,7 @@ public class ConsolePrinter {
      * It doesn’t clear the screen but gives a similar effect.
      */
     public static void clearScreen() {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 100; i++) {
             System.out.println();
         }
     }

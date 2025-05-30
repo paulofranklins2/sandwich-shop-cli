@@ -13,6 +13,8 @@ import java.nio.file.Files;
 import java.util.Objects;
 import java.util.Optional;
 
+import static utils.ConsolePrinter.printHeader;
+
 /**
  * The main screen users see when the app starts. Allows starting an order or viewing receipts.
  */
@@ -76,7 +78,8 @@ public class MainMenu extends StyledVBox {
     }
 
     private void showReceiptOnScreen(String id, String content) {
-        TextArea receiptView = new TextArea("=== Receipt " + id + " ===\n\n" + content);
+        String tittle = printHeader("Loading receipt by id: " + id);
+        TextArea receiptView = new TextArea(tittle + " \n\n" + content);
         receiptView.setEditable(false);
         receiptView.setWrapText(true);
         receiptView.setPrefSize(1400, 800);
