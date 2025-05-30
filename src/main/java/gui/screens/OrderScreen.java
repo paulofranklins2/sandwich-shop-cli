@@ -2,19 +2,16 @@ package gui.screens;
 
 import data.SignatureSandwiches;
 import gui.util.StyledVBox;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import models.*;
 import models.enums.*;
 import persistence.ReceiptManager;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class OrderScreen extends StyledVBox {
@@ -34,11 +31,9 @@ public class OrderScreen extends StyledVBox {
         Button signatureBtn = new Button("\uD83D\uDC98 Add Signature Sandwich");
         Button drinkBtn = new Button("\uD83C\uDF79 Add Drink");
         Button chipBtn = new Button("\uD83C\uDF5F Add Chips");
-//        Button viewReceiptBtn = new Button("\uD83D\uDCC4 View Receipt by ID");
         Button backBtn = new Button("\uD83D\uDD19 Back to Menu");
 
         styleButton(sandwichBtn, signatureBtn, drinkBtn, chipBtn, checkoutBtn, backBtn);
-//        styleButton(sandwichBtn, signatureBtn, drinkBtn, chipBtn, viewReceiptBtn, checkoutBtn, backBtn);
 
         sandwichBtn.setOnAction(e -> {
             Sandwich s = buildCustomSandwichViaDialog();
@@ -64,7 +59,6 @@ public class OrderScreen extends StyledVBox {
             updateReceipt();
         });
 
-//        viewReceiptBtn.setOnAction(e -> showReceiptById());
         checkoutBtn.setOnAction(e -> checkout());
         backBtn.setOnAction(e -> stage.getScene().setRoot(new MainMenu(stage)));
 
@@ -73,7 +67,6 @@ public class OrderScreen extends StyledVBox {
         receiptArea.setWrapText(true);
 
         getChildren().addAll(title, sandwichBtn, signatureBtn, drinkBtn, chipBtn, receiptArea, checkoutBtn, backBtn);
-//        getChildren().addAll(title, sandwichBtn, signatureBtn, drinkBtn, chipBtn, viewReceiptBtn, receiptArea, checkoutBtn, backBtn);
     }
 
     private void updateReceipt() {
@@ -100,29 +93,6 @@ public class OrderScreen extends StyledVBox {
             showAlert(Alert.AlertType.ERROR, "Save Failed", "Could not save receipt: " + e.getMessage());
         }
     }
-
-//    private void showReceiptById() {
-//        TextInputDialog dialog = new TextInputDialog();
-//        dialog.setTitle("View Receipt");
-//        dialog.setHeaderText("Enter Receipt ID");
-//        dialog.setContentText("Receipt ID (e.g., 20250523-172201):");
-//
-//        Optional<String> result = dialog.showAndWait();
-//        result.ifPresent(id -> {
-//            String path = "src/main/resources/receipt/" + id;
-//            File file = new File(path);
-//            if (!file.exists()) {
-//                showAlert(Alert.AlertType.ERROR, "Not Found", "No receipt found with that ID.");
-//                return;
-//            }
-//            try {
-//                String content = Files.readString(file.toPath());
-//                receiptArea.setText("=== Receipt " + id + " ===\n" + content);
-//            } catch (IOException e) {
-//                showAlert(Alert.AlertType.ERROR, "Read Error", "Could not read receipt: " + e.getMessage());
-//            }
-//        });
-//    }
 
     private Sandwich buildSignatureSandwichViaDialog() {
         List<SignatureSandwich> options = SignatureSandwiches.getAll();
@@ -181,8 +151,21 @@ public class OrderScreen extends StyledVBox {
         Optional<SandwichSize> sizeResult = sizeDialog.showAndWait();
         if (sizeResult.isEmpty()) return null;
 
-        List<Topping> selectedToppings = promptToppings("Choose Toppings", Topping.values());
-        List<Topping> extraToppings = promptToppings("Add Extra Toppings?", Topping.values());
+        List<Topping> selectedToppings = new ArrayList<>();
+        for (ToppingType type : ToppingType.values()) {
+            if (confirm("Do you want to add " + type.name().toLowerCase().replace("_", " ") + " toppings?")) {
+                selectedToppings.addAll(promptToppings("Choose " + type.name() + " Toppings", Topping.getByType(type)));
+            }
+        }
+
+        List<Topping> extraToppings = new ArrayList<>();
+        if (confirm("Add extra toppings?")) {
+            for (ToppingType type : ToppingType.values()) {
+                if (confirm("Extra " + type.name().toLowerCase().replace("_", " ") + " toppings?")) {
+                    extraToppings.addAll(promptToppings("Choose Extra " + type.name() + " Toppings", Topping.getByType(type)));
+                }
+            }
+        }
 
         Alert toastAlert = new Alert(Alert.AlertType.CONFIRMATION);
         toastAlert.setTitle("Toasted?");
@@ -193,19 +176,19 @@ public class OrderScreen extends StyledVBox {
         return new Sandwich(sizeResult.get(), breadResult.get(), selectedToppings, extraToppings, isToasted);
     }
 
-    private List<Topping> promptToppings(String title, Topping[] options) {
+    private List<Topping> promptToppings(String title, List<Topping> options) {
         List<Topping> selected = new ArrayList<>();
-        List<String> optionNames = Arrays.stream(options).map(Enum::name).collect(Collectors.toList());
+        List<String> optionNames = options.stream().map(Enum::name).collect(Collectors.toList());
         ChoiceDialog<String> dialog = new ChoiceDialog<>(optionNames.get(0), optionNames);
         dialog.setTitle(title);
         dialog.setHeaderText(null);
         dialog.setContentText("Select one (reopen to add more):");
 
-        boolean adding = true;
-        while (adding) {
+        while (true) {
             Optional<String> result = dialog.showAndWait();
-            result.ifPresent(name -> selected.add(Topping.valueOf(name)));
-            adding = confirm("Add another?");
+            if (result.isEmpty()) break;
+            selected.add(Topping.valueOf(result.get()));
+            if (!confirm("Add another topping of this type?")) break;
         }
         return selected;
     }
